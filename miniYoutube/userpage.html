@@ -13,10 +13,8 @@
 <script type="text/javascript" src="http://cdn.staticfile.org/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="v3/jquery.htmlClean.js"></script>
 <script type="text/javascript" src="v3/scripts.min.js"></script>
-<script type="text/javascript" src="./lib/js/index.js"></script>
 </head>
 <body>
-
 
 <div class="container">
 	<div class="row clearfix">
@@ -40,45 +38,73 @@
 						</div> <button type="submit" class="btn btn-default">Submit</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
+						
 						<li>
-							 <a href="signin.html">Sign in</a>
-						</li>
-						<li>
-							 <a href="signup.html">Sign up</a>
+							 <a href="#">Log out</a>
 						</li>
 						
 					</ul>
 				</div>
 			</nav>
+			<h3>
+				User Page
+			</h3>
 			<div class="row clearfix">
-				
-				<div class="col-md-4 column">
-					<div>
-						<h3 class="text-info">Sign In</h3>
-						<div class="input-group input-group-lg">
-				            <span class="input-group-addon">username</span>
-				            <input type="text" id="user" class="form-control" placeholder="username">
-				        </div></br>
-				       
-				        <div class="input-group input-group-lg">
-				            <span class="input-group-addon">passwd</span>
-				            <input type="password" class="form-control" placeholder="password">
-				        </div></br>
-				        <div id="a">
-					        <div  id="check_box" style="width:10px;display:inline">
-								<div class="col-md-6 column">
-									<input type="text" class="form-control" id="check" name="check" placeholder="CAPTCHA" onfocus="loadCode()" onblur="validate()"/>
+				<div class="col-md-2 column">
+					<div class="panel-group" id="panel-152587">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								 <a class="panel-title" data-toggle="collapse" data-parent="#panel-152587" href="#panel-element-545711">History</a>
+							</div>
+							<div id="panel-element-545711" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<a href="#">History</a>
 								</div>
-								<div class="col-md-4 column">
-									<input type="button" class="form-control" id="code" name="code" onclick="createCode()"/>
+								<div class="panel-body">
+									<a href="#">Upload video</a>
 								</div>
-								<input type="hidden" id="codeNo" name="codeNo"/>
-							</div></br>
-						</div></br></br>
-						<button type="submit" class="btn btn-default" onclick="signin()">Submit</button>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								 <a class="panel-title" data-toggle="collapse" data-parent="#panel-152587" href="#panel-element-893537">Settings</a>
+							</div>
+							<div id="panel-element-893537" class="panel-collapse collapse">
+								<div class="panel-body">
+									<a href="#">Update password</a>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+				<div class="col-md-8 column">
+					<h3 class="text-info">Upload Video</h3>
+					<form role="form">
+						<div class="form-group">
+							 <label for="exampleInputTitle">Video title</label>
+							 <input type="text" class="form-control" id="exampleInputTitle" />
+						</div>
+						<div class="form-group">
+							 <label for="name">Description</label>
+							 <textarea class="form-control" rows="5" value="Brief Description of the video"></textarea>
+
+						</div>
+						<div class="form-group">
+							 <label for="exampleInputFile">Upload video</label>
+							 <input type="file" id="exampleInputFile" />
+							
+						</div>
+						<div class="checkbox">
+							 <label><input name="radiobox" type="radio" id="public" value="public"/> Public</label>    
+							 <label><input name="radiobox" type="radio" id="private" value="private"/> Private</label>
+							 <label><input name="radiobox" type="radio" id="friendOnly" value="friendOnly"/> Friend only</label>
+						</div> 
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</div>
 			</div>
+				
+		</div>
 	</div>
 </div>
 </body>
