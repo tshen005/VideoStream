@@ -27,7 +27,7 @@
 		sql = "";
 		sql = String.format(fmt,username,email, password, admin);
 		int cnt = statement.executeUpdate(sql);
-		session.setAttribute("username", username);
+		//session.setAttribute("username", username);
 		out.println("1");
 	}
 %>

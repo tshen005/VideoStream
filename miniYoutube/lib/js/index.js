@@ -1,32 +1,95 @@
-var code ; //在全局定义验证码   
-//产生验证码  
+function checkSession() {
+//	alert("sdf11111");
+	var signinin = document.getElementById("ticket1");
+	var signupup = document.getElementById("ticket2");
+//	alert(signupup);
+	var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				var msg = xmlhttp.responseText;
+				if (msg == 1) {
+					signinin.innerHTML="<a href=\"userpage.html\" id=\"signinin\">My profile</a>";
+					signupup.innerHTML="<a href=\"#\" id=\"signinin\" onclick=\"signout()\">Sign out</a>";
+
+				}
+				else {
+					//window.location.href="./play.html";
+					return;
+				}
+			}
+		}
+		
+		xmlhttp.open("POST","checkSession.jsp",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send();
+}
+
+function signout() {
+	var signinin = document.getElementById("ticket1");
+	var signupup = document.getElementById("ticket2");
+	//alert(signupup);
+	var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				var msg = xmlhttp.responseText;
+				if (msg == 1) {
+					
+					signinin.innerHTML="<a href=\"signin.html\">Sign in</a>";
+					signupup.innerHTML="<a href=\"signup.html\">Sign up</a>";
+				}
+				else {
+					return;
+				}
+			}
+		}
+		
+		xmlhttp.open("POST","signout.jsp",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send();
+}
+
+
+var code; 
 function createCode(){  
 	 code = "";   
-	 var codeLength = 4;//验证码的长度  
+	 var codeLength = 4;
 	 var checkCode = document.getElementById("code");   
 	 var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',  
-	 'S','T','U','V','W','X','Y','Z');//随机数  
-	 for(var i = 0; i < codeLength; i++) {//循环操作  
-		var index = Math.floor(Math.random()*36);//取得随机数的索引（0~35）  
-		code += random[index];//根据索引取得随机数加到code上  
+	 'S','T','U','V','W','X','Y','Z');
+	 for(var i = 0; i < codeLength; i++) {
+		var index = Math.floor(Math.random()*36);
+		code += random[index];
 	}  
-	checkCode.value = code;//把code值赋给验证码
+	checkCode.value = code;
 	var x = document.getElementById("codeNo");
 	x.value = code;
 }
-var code2 ; //在全局定义验证码   
-//产生验证码  
+var code2; 
 function createCode2(){  
 	 code2 = "";   
-	 var codeLength = 4;//验证码的长度  
+	 var codeLength = 4; 
 	 var checkCode = document.getElementById("code2");   
 	 var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',  
-	 'S','T','U','V','W','X','Y','Z');//随机数  
-	 for(var i = 0; i < codeLength; i++) {//循环操作  
-		var index = Math.floor(Math.random()*36);//取得随机数的索引（0~35）  
-		code2 += random[index];//根据索引取得随机数加到code上  
+	 'S','T','U','V','W','X','Y','Z');
+	 for(var i = 0; i < codeLength; i++) {
+		var index = Math.floor(Math.random()*36); 
+		code2 += random[index];
 	}  
-	checkCode.value = code2;//把code值赋给验证码
+	checkCode.value = code2;
 	var x = document.getElementById("codeNo2");
 	x.value = code2;
 }
@@ -48,7 +111,7 @@ function loadCode2() {
 		load2 = 1;
 	}
 }
-//校验验证码  
+
 function validate(){  
 	if (load != 0) {
 		var inputCode = document.getElementById("check").value.toUpperCase(); //取得输入的验证码并转化为大写
@@ -61,7 +124,7 @@ function validate(){
 		}
 	}        
 }
-//校验验证码  
+
 function validate2(){  
 	if (load2 != 0) {
 		var inputCode = document.getElementById("check2").value.toUpperCase(); //取得输入的验证码并转化为大写
@@ -74,10 +137,10 @@ function validate2(){
 		}
 	}        
 }
-//两次密码是否相同
+
 function samepasswd() {
-	var passwd1 = document.getElementById("passwd").value;
-	var passwd2 = document.getElementById("passwd2").value;
+	var passwd1 = document.getElementById("passwd");
+	var passwd2 = document.getElementById("passwd2");
 	var x = document.getElementById("tick_passwdsame");
 	if (passwd1 == "" || passwd2 == "") {}
 	else if (passwd1 == passwd2) {
@@ -90,30 +153,31 @@ function samepasswd() {
 	}
 }
 
-//登录
+
 function signin() {
 	var u = document.getElementById("user").value;
 	var p = document.getElementById("passwd").value;
 	var c = document.getElementById("check").value;
-	
-	var x = document.getElementById("tick_user");
-	var y = document.getElementById("tick_passwd");
-	var z = document.getElementById("tick_check");
+
+//	var x = document.getElementById("tick_user");
+//	var y = document.getElementById("tick_passwd");
+//	var z = document.getElementById("tick_check");
 	
 	if (u.length < 1) {
-		x.innerHTML = "<img src = \"./images/001_75.png\"/>";
+//		x.innerHTML = "<img src = \"./images/001_75.png\"/>";
 		return;
 	}
 	if (p.length < 1) {
-		y.innerHTML = "<img src = \"./images/001_75.png\"/>";
+//		y.innerHTML = "<img src = \"./images/001_75.png\"/>";
 		return;
 	}
 	if (c.toUpperCase() != code) {
-		z.innerHTML = "<img src = \"./images/001_75.png\"/>";
+//		z.innerHTML = "<img src = \"./images/001_75.png\"/>";
 		return;
 	}
+
 	if (c.toUpperCase() == code) {
-		z.innerHTML = "<img src = \"./images/004_16.png\"/>";
+//		z.innerHTML = "<img src = \"./images/004_16.png\"/>";
 		var xmlhttp;
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
@@ -121,37 +185,38 @@ function signin() {
 		else {// code for IE6, IE5
 			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 		}
-		
+
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				var msg = xmlhttp.responseText;
+	//			alert("sdfwwwww");
 				if (msg == 0) {
-					x.innerHTML="<img src = \"./images/001_75.png\"/>";
+	//				x.innerHTML="<img src = \"./images/001_75.png\"/>";
 					return;
 				}
 				else if (msg == 1) {
-					y.innerHTML="<img src = \"./images/001_75.png\"/>";
+	//				y.innerHTML="<img src = \"./images/001_75.png\"/>";
 					return;
 				}
 				else if (msg == 3) {
-					window.location.href="./admin.jsp";
+					window.location.href="./admin.html";
 					return;
 				}
 				else {
-					window.location.href="./main.jsp";
+					window.history.back();
 					return;
 				}
 			}
 		}
 		
-		xmlhttp.open("POST","login.jsp?user="+u+"&passwd="+p,true);
+		xmlhttp.open("POST","signin.jsp?user="+u+"&passwd="+p,true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send();
 	}
 	
 }
 
-//判断用户名
+
 function userok() {
 	var u = document.getElementById("user2").value;
 	var x = document.getElementById("tick_user2");
@@ -185,7 +250,7 @@ function userok() {
 	
 }
 
-//注册
+
 function signup() {
 //	alert("sdfdsfdfsdfs");
 	var u = document.getElementById("username").value;
@@ -237,7 +302,10 @@ function signup() {
 				}
 				else {
 					alert("ok");
-					window.location.href="./index.html";
+					//String add = "./index.html?uid=" + u;
+					//window.location.href=add;
+					//window.location.href="./index.html";
+					window.history.back();
 					return;
 				} 
 			}
