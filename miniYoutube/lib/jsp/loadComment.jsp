@@ -14,29 +14,25 @@
 	Class.forName(driver);
 	Connection conn = DriverManager.getConnection(url, user, passwd);
 	Statement statement = conn.createStatement();
-	String sql = "select * from video where VideoID = '" + vid + "'";
+	String sql = "select * from comments where VideoID = '" + vid + "'";
 	ResultSet rs = statement.executeQuery(sql);
 
 	xmlStr = xmlStr+"<message>";
 	//out.println(a);
 	while(rs.next()) {
 		xmlStr = xmlStr + "<mmsg>";
-		String urlV = rs.getString("Url");
-		String videoName = rs.getString("VideoName");
-		String uploader = rs.getString("Uploader");
-		//String time = rs.getString("Time");
-		String urlC = rs.getString("Cover");
-		String description = rs.getString("Description");
-		String like = rs.getString("Likes");
-		String dislike = rs.getString("Dislikes");
+		String username = rs.getString("Name");
+		String content = rs.getString("Contents");
+		//String uploader = rs.getString("Uploader");
+		String time = rs.getString("Time");
 		
-		xmlStr = xmlStr+"<urlV>"+urlV+"</urlV>";
-		xmlStr = xmlStr+"<videoName>"+videoName+"</videoName>";
-		xmlStr = xmlStr+"<uploaderr>"+uploader+"</uploaderr>";
-		//xmlStr = xmlStr+"<time>"+time+"</time>";
-		xmlStr = xmlStr+"<description>"+description+"</description>";
-		xmlStr = xmlStr+"<like>"+like+"</like>";
-		xmlStr = xmlStr+"<dislike>"+dislike+"</dislike>";
+		xmlStr = xmlStr+"<name>"+username+"</name>";
+		xmlStr = xmlStr+"<content>"+content+"</content>";
+		//xmlStr = xmlStr+"<uploaderr>"+uploader+"</uploaderr>";
+		xmlStr = xmlStr+"<time>"+time+"</time>";
+		//xmlStr = xmlStr+"<description>"+description+"</description>";
+		//xmlStr = xmlStr+"<like>"+like+"</like>";
+		//xmlStr = xmlStr+"<dislike>"+dislike+"</dislike>";
 
 		xmlStr = xmlStr +"</mmsg>";
 	}
