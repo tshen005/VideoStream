@@ -18,6 +18,21 @@
 <body >
 
 <script type="text/javascript">
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//videostream-1.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
 	function getVideoID() {
 		var url = location.search;
 		var theRequest = new Object();
@@ -49,16 +64,20 @@
 				var x1 = xmlDoc.getElementsByTagName("urlV");
 				var uploader1 = xmlDoc.getElementsByTagName("uploaderr");
 				var videoName = xmlDoc.getElementsByTagName("videoName");
+				var time = xmlDoc.getElementsByTagName("time");
 				var description = xmlDoc.getElementsByTagName("description");
 				var likes = xmlDoc.getElementsByTagName("like");
 				var dislikes = xmlDoc.getElementsByTagName("dislike");
+				var views = xmlDoc.getElementsByTagName("viewss");
+
 				document.getElementById("uploader").innerHTML=uploader1[0].childNodes[0].nodeValue;
 				document.getElementById("title").innerHTML=videoName[0].childNodes[0].nodeValue;
 				document.getElementById("urlV").innerHTML="<source src=\""+x1[0].childNodes[0].nodeValue+"\"\>";
 				document.getElementById("description").innerHTML=description[0].childNodes[0].nodeValue;
+				document.getElementById("time").innerHTML=time[0].childNodes[0].nodeValue; 
 				document.getElementById("likes").innerHTML=likes[0].childNodes[0].nodeValue;
 				document.getElementById("dislikes").innerHTML=dislikes[0].childNodes[0].nodeValue;
-				
+				document.getElementById("views").innerHTML=views[0].childNodes[0].nodeValue;
 			}
 		}
 		
@@ -67,8 +86,7 @@
 		xmlhttp.send();
 	}
 
-	function loadcomment() {
-		var xmlDoc;
+	function addlike() {
 		var xmlhttp;
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
@@ -79,24 +97,78 @@
 
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-				xmlDoc = xmlhttp.responseXML;
-				var x1 = xmlDoc.getElementsByTagName("urlV");
-				var uploader1 = xmlDoc.getElementsByTagName("uploaderr");
-				var videoName = xmlDoc.getElementsByTagName("videoName");
-				var description = xmlDoc.getElementsByTagName("description");
-				var likes = xmlDoc.getElementsByTagName("like");
-				var dislikes = xmlDoc.getElementsByTagName("dislike");
-				document.getElementById("uploader").innerHTML=uploader1[0].childNodes[0].nodeValue;
-				document.getElementById("title").innerHTML=videoName[0].childNodes[0].nodeValue;
-				document.getElementById("urlV").innerHTML="<source src=\""+x1[0].childNodes[0].nodeValue+"\"\>";
-				document.getElementById("description").innerHTML=description[0].childNodes[0].nodeValue;
-				document.getElementById("likes").innerHTML=likes[0].childNodes[0].nodeValue;
-				document.getElementById("dislikes").innerHTML=dislikes[0].childNodes[0].nodeValue;
+				var msg = xmlhttp.responseText;
+				document.getElementById("likes").innerHTML=msg;
+			}
+		}
+		xmlhttp.open("GET","./lib/jsp/addlike.jsp?vid="+vid,true);
+		xmlhttp.send();
+	}
+
+	function adddislike() {
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				//alert(msg);
+				var msg = xmlhttp.responseText;
+				document.getElementById("dislikes").innerHTML=msg;
+			}
+		}
+		xmlhttp.open("GET","./lib/jsp/adddislike.jsp?vid="+vid,true);
+		xmlhttp.send();
+	}
+
+	function report() {
+		var description = document.getElementById("description111").value;
+		var xmlhttp;
+		alert(description);
+		
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				var msg = xmlhttp.responseText;
+				if(msg == 1) {
+					alert("success");
+				}
+			}
+		}
+		
+		xmlhttp.open("POST","./lib/jsp/report.jsp?vid="+vid+"&description="+description,true);
+		xmlhttp.send();
+	}
+
+	function loadcomment() {
+		var xmlDoc;
+		var xmlhttp;
+		//document.getElementById("views").innerHTML="232";
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				xmlDoc = xmlhttp.responseText;
+				
+				
 				
 			}
 		}
 		
-		xmlhttp.open("GET","/lib/jsp/loadComment.jsp?vid="+vid,false);
+		xmlhttp.open("GET","./lib/jsp/loadComment.jsp?vid="+vid,true);
 		xmlhttp.send();
 	}
 
@@ -146,7 +218,7 @@
 				<h3 id="title" class="text-info">Title of Video</h3>
 					<frame>
 						<html5>
-							<video id="urlV" height="400" controls>
+							<video id="urlV" height="400" width="750" controls>
 	 							<source src="./video/movie.mp4">
 							</video>
 						</html5>
@@ -157,7 +229,7 @@
 					</br>
 					<p> </p>
 					<h5 class="text-info">uploader</h5><span id="uploader"> </span>
-					<span id="time"> </span>
+					<p id="time"> </p>
 					<h5 class="text-info">description</h5>
 					<p id="description">There will be a div of the introduction of the vidoe</p>
 				</div>
@@ -165,10 +237,11 @@
 			 		<button class="btn btn-default"  type="button" onclick="addlike()">
 			 			like <span id="likes"></span>
 			 		</button> 
-			 		<button class="btn btn-default" type="button" onclike="adddislike()">
+			 		<button class="btn btn-default" type="button" onclick="adddislike()">
 			 			dislike <span id="dislikes"></span>
 			 		</button> 
-		 			<a id="modal-453069" href="#modal-container-453069" role="button" class="btn" data-toggle="modal">report</a>
+			 		<span id="views"></span><span > views</span>
+		 			<a id="modal-453069" href="#modal-container-453069" role="button" class="btn" data-toggle="modal" style="float:right">report</a>
 					<div class="modal fade" id="modal-container-453069" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
@@ -176,7 +249,8 @@
 					 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 									<h4 class="modal-title" id="myModalLabel">Do you want to report this video?</h4>
 								</div>
-								<div class="modal-body">Description<textarea class="form-control" rows="5" value="description"></textarea></div>
+								<div class="modal-body">Description
+								<textarea class="form-control" id="description111" placeholder="reason" rows="5"></textarea></div>
 								<div class="modal-footer">
 					 				<button type="button" class="btn btn-default" data-dismiss="modal">cancle</button> <button type="button" class="btn btn-primary" onclick="report()">report</button>
 								</div>
@@ -186,13 +260,32 @@
 				</div>
 				
 			</div>
+			
 			<div class="row clearfix">
 				<div class="col-md-8 column">
+				
 					<h3 class="text-info">Comments</h3>
-					<div class="form-group">
-						<textarea class="form-control" rows="5" value="comments"></textarea>
-						<button type="submit" class="btn btn-default" onclick="submitComment()">Submit</button>
-					</div>
+					<div id="disqus_thread"></div>
+					<!-- Input timestamp form -->
+					<form>
+						<input type="checkbox" id="timed" value="timed">Timed<br>
+						
+						<div id="inputtime">
+							Timestamp: 
+							<input type="text" placeholder="Time" />
+						</div>
+						<script>
+						$('#inputtime').hide();
+						$('#timed').click(function() {
+							if ($(this).is(':checked')) {
+								$('#inputtime').show();
+							} else {
+								$('#inputtime').hide();
+							}
+						});
+						</script>
+					</form>
+					
 				</div>	
 			</div>
 		</div>

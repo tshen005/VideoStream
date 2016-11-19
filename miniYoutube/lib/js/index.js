@@ -14,7 +14,7 @@ function checkSession() {
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				var msg = xmlhttp.responseText;
-				if (msg == 1) {
+				if (msg != 0) {
 					signinin.innerHTML="<a href=\"userpage.html\" id=\"signinin\">My profile</a>";
 					signupup.innerHTML="<a href=\"#\" id=\"signinin\" onclick=\"signout()\">Sign out</a>";
 
@@ -26,10 +26,12 @@ function checkSession() {
 			}
 		}
 		
-		xmlhttp.open("POST","checkSession.jsp",true);
+		xmlhttp.open("POST","./lib/jsp/checkSession.jsp",true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send();
 }
+
+
 
 function signout() {
 	var signinin = document.getElementById("ticket1");
@@ -57,11 +59,37 @@ function signout() {
 			}
 		}
 		
-		xmlhttp.open("POST","signout.jsp",true);
+		xmlhttp.open("POST","./lib/jsp/signout.jsp",true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send();
 }
 
+function signouta() {
+
+	var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				var msg = xmlhttp.responseText;
+				if (msg == 1) {
+					window.location.href="./index.html";
+				}
+				else {
+					return;
+				}
+			}
+		}
+		
+		xmlhttp.open("POST","./lib/jsp/signout.jsp",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send();
+}
 
 var code; 
 function createCode(){  
@@ -199,17 +227,21 @@ function signin() {
 					return;
 				}
 				else if (msg == 3) {
-					window.location.href="./admin.html";
+					window.location.href="./admin.jsp";
+					return;
+				}
+				else if(msg == 2){
+					window.location.href="./index.html";
 					return;
 				}
 				else {
-					window.history.back();
+					window.location.href="./index.html";
 					return;
 				}
 			}
 		}
 		
-		xmlhttp.open("POST","signin.jsp?user="+u+"&passwd="+p,true);
+		xmlhttp.open("POST","./lib/jsp/signin.jsp?user="+u+"&passwd="+p,true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send();
 	}
@@ -243,7 +275,7 @@ function userok() {
 			}
 		}
 		
-		xmlhttp.open("POST","checkuser.jsp?user="+u,true);
+		xmlhttp.open("POST","./lib/jsp/checkuser.jsp?user="+u,true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send();
 	}
@@ -304,8 +336,8 @@ function signup() {
 					alert("ok");
 					//String add = "./index.html?uid=" + u;
 					//window.location.href=add;
-					//window.location.href="./index.html";
-					window.history.back();
+					window.location.href="./index.html";
+					//window.history.back();
 					return;
 				} 
 			}
@@ -314,5 +346,45 @@ function signup() {
 		xmlhttp.open("POST","signup.jsp?user="+u+"&passwd="+p1+"&email="+e,true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send();
-	}
+	}	
 }
+
+function updatepwd() {
+
+	var ticket = document.getElementById("uploadpwd");
+
+	var opwd = document.getElementById("opwd").value;
+	var passwd = document.getElementById("passwd").value;
+	var passwd2 = document.getElementById("passwd2").value;
+
+	if(passwd != passwd2) {
+		alert("not");
+		return;
+	}
+	var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				var msg = xmlhttp.responseText;
+				if (msg == 1) {
+					//alert(msg);
+					ticket.innerHTML="<p>Success</p>";
+				}
+				else {
+					alert(msg);
+					return;
+				}
+			}
+		}
+		
+		xmlhttp.open("POST","./lib/jsp/updatepwd.jsp?opwd="+opwd+"&passwd="+passwd,true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send();
+}
+

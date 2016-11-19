@@ -13,8 +13,116 @@
 <script type="text/javascript" src="http://cdn.staticfile.org/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="v3/jquery.htmlClean.js"></script>
 <script type="text/javascript" src="v3/scripts.min.js"></script>
+<script type="text/javascript" src="./lib/js/index.js"></script>
 </head>
 <body>
+
+<script type="text/javascript">
+var username="";
+
+function getSession() {
+	var xmlhttp;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else {// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var msg = xmlhttp.responseText;
+			if (msg != 0) {
+				username=msg;
+				var tmp= document.getElementById("username");
+				tmp.innerHTML=msg;
+				//alert(tmp.innerHTML);
+			}
+			else {
+				window.location.href="./signin.html";
+				return;
+			}
+		}
+	}
+	
+	xmlhttp.open("POST","./lib/jsp/checkSession.jsp",true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send();
+}
+
+function getProfile() {
+	var xmlhttp;
+	var xmlDoc;
+	//alert("sdf");
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else {// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			xmlDoc = xmlhttp.responseXML;
+			var phone = xmlDoc.getElementsByTagName("phone");
+			//var gender = xmlDoc.getElementsByTagName("gender");
+			var addr = xmlDoc.getElementsByTagName("addr");
+			var state = xmlDoc.getElementsByTagName("state");
+			var intro = xmlDoc.getElementsByTagName("intro");
+			//alert(phone[0].childNodes[0].nodeValue);
+			document.getElementById("phone").value=phone[0].childNodes[0].nodeValue;
+			document.getElementById("address").value=addr[0].childNodes[0].nodeValue;
+			document.getElementById("state").value=state[0].childNodes[0].nodeValue;
+			document.getElementById("selfintro").innerHTML=intro[0].childNodes[0].nodeValue;
+		}
+	}
+	
+	xmlhttp.open("GET","./lib/jsp/getprofile.jsp",true);
+	//xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send();
+}
+
+function modifyprofile() {
+	var x1 = document.getElementById("phone").value;
+	var x2 = document.getElementById("address").value;
+	var x3 = document.getElementById("state").value;
+	var x4 = document.getElementById("selfintro").value;
+	//alert("innerHTML");
+	var xmlhttp;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else {// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var msg = xmlhttp.responseText;
+			if (msg != 0) {
+				//alert("innerHTML");
+				window.location.href="./userpage.html";
+			}
+			else {
+				window.location.href="./signin.html";
+				return;
+			}
+		}
+	}
+	
+	xmlhttp.open("POST","./lib/jsp/modifyprofile.jsp?t="+x1+"&a="+x2+"&s="+x3+"&intro="+x4,true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send();
+
+}
+
+$(document).ready(function(){
+	window.onload=getSession();
+	window.onload=getProfile();
+});
+
+</script>
+
 
 <div class="container">
 	<div class="row clearfix">
@@ -39,16 +147,15 @@
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						
-						<li>
-							 <a href="#">Log out</a>
+						<li id="ticket1">
+							 <a href="#" onclick="signout()">Sign out</a>
 						</li>
 						
 					</ul>
 				</div>
 			</nav>
-			<h3>
-				User Page
-			</h3>
+			<h3>User Page</h3>
+			<p id="username" style="display:none"></p>
 			<div class="row clearfix">
 				<div class="col-md-2 column">
 					<div class="panel-group" id="panel-152587">
@@ -58,10 +165,27 @@
 							</div>
 							<div id="panel-element-545711" class="panel-collapse collapse in">
 								<div class="panel-body">
-									<a href="#">History</a>
+									<a href="#" onclick="showUpload()">Upload video</a>
+									<script type="text/javascript">
+										function showUpload() {
+											var show1 = document.getElementById("upload");
+											show1.style.display="block";
+											var show2 = document.getElementById("uploadpwd");
+											show2.style.display="none";
+											var show3 = document.getElementById("uploadprofile");
+											show3.style.display="none";
+
+										}
+									</script>
 								</div>
 								<div class="panel-body">
-									<a href="#">Upload video</a>
+									<a href="#" onclick="awe()">History</a>
+									<script type="text/javascript">
+										function awe() {
+											var a = document.getElementById("username");
+											alert("Not implement yet...");
+										}
+									</script>
 								</div>
 							</div>
 						</div>
@@ -71,29 +195,57 @@
 							</div>
 							<div id="panel-element-893537" class="panel-collapse collapse">
 								<div class="panel-body">
-									<a href="#">Update password</a>
+									<a href="#" onclick="showUploadprofile()">Modify profile</a>
+									<script type="text/javascript">
+									function showUploadprofile() {
+											var show1 = document.getElementById("uploadpwd");
+											show1.style.display="none";
+											var show2 = document.getElementById("upload");
+											show2.style.display="none";
+											var show3 = document.getElementById("uploadprofile");
+											show3.style.display="block";
+										}
+									</script>
 								</div>
 								<div class="panel-body">
-									<a href="#">Update password</a>
+									<a href="#" onclick="showUploadpwd()">Update password</a>
+									<script type="text/javascript">
+									function showUploadpwd() {
+											var show1 = document.getElementById("uploadpwd");
+											show1.style.display="block";
+											var show2 = document.getElementById("upload");
+											show2.style.display="none";
+											var show3 = document.getElementById("uploadprofile");
+											show3.style.display="none";
+										}
+									</script>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-8 column">
+				<div class="col-md-8 column" id="upload" style="display:block">
 					<h3 class="text-info">Upload Video</h3>
-					<form role="form">
+					<form role="form" name="fileupload" action="./lib/jsp/uploadvideo.jsp" method="POST" enctype="multipart/form-data">
 						<div class="form-group">
 							 <label for="exampleInputTitle">Video title</label>
-							 <input type="text" class="form-control" id="exampleInputTitle" />
+							 <input type="text" class="form-control" name="VideoName" id="VideoName" />
+						</div>
+						<div class="form-group">
+							 <label for="exampleInputTitle">Video tag</label>
+							 <input type="text" class="form-control" name="Tag" id="Tag" />
 						</div>
 						<div class="form-group">
 							 <label for="name">Description</label>
-							 <textarea class="form-control" rows="5" value="Brief Description of the video"></textarea>
+							 <textarea class="form-control" rows="5" value="Brief Description of the video" id="Description" name="Description"></textarea>
 						</div>
 						<div class="form-group">
 							 <label for="exampleInputFile">Upload video</label>
-							 <input type="file" id="exampleInputFile" />
+							 <input type="file" id="upvideo" name="Url" multiple="multiple" />
+						</div>
+						<div class="form-group">
+							 <label for="exampleInputFile">Upload cover</label>
+							 <input type="file" id="upcover" name="Cover" multiple="multiple" />
 						</div>
 						<div class="checkbox">
 							 <label><input name="radiobox" type="radio" id="public" value="public"/> Public</label>    
@@ -101,6 +253,52 @@
 							 <label><input name="radiobox" type="radio" id="friendOnly" value="friendOnly"/> Friend only</label>
 						</div> 
 						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</div>
+				<div class="col-md-8 column" id="history" style="display:none">
+					<h3 class="text-info">History</h3>
+					<p>Wait...</p>
+				</div>
+				<div class="col-md-8 column" id="uploadpwd" style="display:none">
+					<h3 class="text-info">Upload password</h3>
+					<form role="form">
+						<div class="form-group">
+							 <label for="exampleInputTitle">old password</label>
+							 <input type="password" class="form-control" id="opwd" />
+						</div>
+						<div class="form-group">
+							 <label for="exampleInputTitle">new password</label>
+							 <input type="password" class="form-control" id="passwd" onblur="samepasswd()"/>
+						</div>
+						<div class="form-group">
+							 <label for="exampleInputTitle">confrim password</label>
+							 <input type="password" class="form-control" id="passwd2" onblur="samepasswd()"/>
+						</div>
+						<span id="tick_passwdsame"></span>
+						<button type="submit" class="btn btn-default" onclick="updatepwd()">Submit</button>
+					</form>
+				</div>
+				<div class="col-md-8 column" id="uploadprofile" style="display:none">
+					<h3 class="text-info">Modify profile</h3>
+					<form role="form">
+						<div class="form-group">
+							 <label for="exampleInputTitle">telephone</label>
+							 <input type="text" class="form-control" id="phone" />
+						</div>
+						
+						<div class="form-group">
+							 <label for="exampleInputTitle">Address</label>
+							 <input type="text" class="form-control" id="address">
+						</div>
+						<div class="form-group">
+							 <label for="exampleInputTitle">Nationality</label>
+							 <input type="text" class="form-control" id="state">
+						</div>
+						<div class="form-group">
+							 <label for="name">Self Introduction</label>
+							 <textarea class="form-control" rows="5" id="selfintro" name="selfintro"></textarea>
+						</div>
+						<button type="submit" class="btn btn-default" onclick="modifyprofile()">Submit</button>
 					</form>
 				</div>
 			</div>	
@@ -121,7 +319,7 @@
 					<ul class="list-unstyled">
 						<strong>Technique we used</strong>
 						<li>
-							JavaScrip
+							JavaScript
 						</li>
 						<li>
 							HTML

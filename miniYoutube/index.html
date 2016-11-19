@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>test</title>
+  <title>VideoStream</title>
 
   <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">  
   <script src="./lib/jquery.js"></script>
@@ -14,7 +14,38 @@
 <script type="text/javascript" src="v3/jquery.htmlClean.js"></script>
 <script type="text/javascript" src="v3/scripts.min.js"></script>
 <script type="text/javascript" src="./lib/js/index.js"></script>
+
+<style type="text/css">
+	
+.navbar{
+	
+	box-shadow: -2px -2px 8px gray;
+	filter:alpha(opacity=95);
+	opacity:0.95;
+	margin-bottom: 0px;
+}
+
+footer .container{
+	background-color: rgb(246,246,246);
+}
+.thumbnail {
+	min-height: 200px;
+	max-height: 200px;
+	min-width: 250px;
+	max-width: 250px;
+}
+
+.thumbnail>p {
+	text-align: center;
+	position: relative;
+	bottom: 1px;
+}
+
+</style>
+
 </head>
+
+
 
 <body onload="checkSession()">
 
@@ -28,7 +59,7 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active">
+						<li>
 							 <a href="index.html">Home</a>
 						</li>
 						<li>
@@ -38,7 +69,7 @@
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" />
-						</div> <button type="submit" class="btn btn-default">Submit</button>
+						</div> <button type="submit" class="btn btn-default">Search</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						<li id="ticket1">
@@ -61,7 +92,7 @@
 				</ol>
 				<div class="carousel-inner">
 					<div class="item">
-						<img alt="" src="./images/img2.jpg" />
+						<img alt="" src="./images/default.jpg" />
 						<div class="carousel-caption">
 							<h4>
 								First Thumbnail label
@@ -72,7 +103,7 @@
 						</div>
 					</div>
 					<div class="item">
-						<img alt="" src="./images/img1.jpg" />
+						<img alt="" src="./images/default.jpg" />
 						<div class="carousel-caption">
 							<h4>
 								Second Thumbnail label
@@ -83,7 +114,7 @@
 						</div>
 					</div>
 					<div class="item active">
-						<img alt="" src="./images/img3.jpg" />
+						<img alt="" src="./images/default.jpg" />
 						<div class="carousel-caption">
 							<h4>
 								Third Thumbnail label
@@ -98,24 +129,26 @@
 			<div class="row clearfix">
 				<div class="col-md-12 column">
 					<div class="row">
-						<h3 class="text-info">&nbsp HISTORY</h3>
+						<h3 class="text-info">&nbsp NEW</h3>
 					    <div class="col-sm-6 col-md-3">
 					        <a href="play.html?vid=1" class="thumbnail">
-					            <img src="./images/covers/a.png"
+					            <img src="./images/covers/43.png"
 					                 alt="通用的占位符缩略图">
-					            <p>afdd</p>
+					            <p>TOFEL READING</p>
 					        </a>
 					    </div>
 					    <div class="col-sm-6 col-md-3">
-					        <a href="#" class="thumbnail">
-					            <img src="./images/kittens.jpg"
+					        <a href="play.html?vid=4" class="thumbnail">
+					            <img src="./images/covers/19.png"
 					                 alt="通用的占位符缩略图">
+					            <p>I don't know what's this</p>
 					        </a>
 					    </div>
 					    <div class="col-sm-6 col-md-3">
-					        <a href="#" class="thumbnail">
-					            <img src="./images/kittens.jpg"
+					        <a href="play.html?vid=11" class="thumbnail">
+					            <img src="./images/covers/43.png"
 					                 alt="通用的占位符缩略图">
+					            <p>Review Strategy</p>
 					        </a>
 					    </div>
 					    <div class="col-sm-6 col-md-3">
@@ -152,33 +185,7 @@
 					        </a>
 					    </div>
 					</div>
-					<div class="row">
-						<h3 class="text-info">&nbsp ANIMATION</h3>
-					    <div class="col-sm-6 col-md-3">
-					        <a href="#" class="thumbnail">
-					            <img src="./images/kittens.jpg"
-					                 alt="通用的占位符缩略图">
-					        </a>
-					    </div>
-					    <div class="col-sm-6 col-md-3">
-					        <a href="#" class="thumbnail">
-					            <img src="./images/kittens.jpg"
-					                 alt="通用的占位符缩略图">
-					        </a>
-					    </div>
-					    <div class="col-sm-6 col-md-3">
-					        <a href="#" class="thumbnail">
-					            <img src="./images/kittens.jpg"
-					                 alt="通用的占位符缩略图">
-					        </a>
-					    </div>
-					    <div class="col-sm-6 col-md-3">
-					        <a href="#" class="thumbnail">
-					            <img src="./images/kittens.jpg"
-					                 alt="通用的占位符缩略图">
-					        </a>
-					    </div>
-					</div>
+				
 				</div>
 			</div>
 		</div>
