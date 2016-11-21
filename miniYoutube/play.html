@@ -252,7 +252,7 @@ s.setAttribute('data-timestamp', +new Date());
 								<div class="modal-body">Description
 								<textarea class="form-control" id="description111" placeholder="reason" rows="5"></textarea></div>
 								<div class="modal-footer">
-					 				<button type="button" class="btn btn-default" data-dismiss="modal">cancle</button> <button type="button" class="btn btn-primary" onclick="report()">report</button>
+					 				<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button> <button type="button" class="btn btn-primary" onclick="report()">report</button>
 								</div>
 							</div>
 						</div>
@@ -263,29 +263,8 @@ s.setAttribute('data-timestamp', +new Date());
 			
 			<div class="row clearfix">
 				<div class="col-md-8 column">
-				
 					<h3 class="text-info">Comments</h3>
 					<div id="disqus_thread"></div>
-					<!-- Input timestamp form -->
-					<form>
-						<input type="checkbox" id="timed" value="timed">Timed<br>
-						
-						<div id="inputtime">
-							Timestamp: 
-							<input type="text" placeholder="Time" />
-						</div>
-						<script>
-						$('#inputtime').hide();
-						$('#timed').click(function() {
-							if ($(this).is(':checked')) {
-								$('#inputtime').show();
-							} else {
-								$('#inputtime').hide();
-							}
-						});
-						</script>
-					</form>
-					
 				</div>	
 			</div>
 		</div>

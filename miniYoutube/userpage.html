@@ -142,8 +142,8 @@ $(document).ready(function(){
 					</ul>
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
-							<input type="text" class="form-control" />
-						</div> <button type="submit" class="btn btn-default">Submit</button>
+							<input type="text" name="search_query" placeholder="Search" class="form-control" />
+						</div> <button type="submit" class="btn btn-default" formaction="results.html">Submit</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						
@@ -263,15 +263,15 @@ $(document).ready(function(){
 					<h3 class="text-info">Upload password</h3>
 					<form role="form">
 						<div class="form-group">
-							 <label for="exampleInputTitle">old password</label>
+							 <label for="exampleInputTitle">Old password</label>
 							 <input type="password" class="form-control" id="opwd" />
 						</div>
 						<div class="form-group">
-							 <label for="exampleInputTitle">new password</label>
+							 <label for="exampleInputTitle">New password</label>
 							 <input type="password" class="form-control" id="passwd" onblur="samepasswd()"/>
 						</div>
 						<div class="form-group">
-							 <label for="exampleInputTitle">confrim password</label>
+							 <label for="exampleInputTitle">Confirm password</label>
 							 <input type="password" class="form-control" id="passwd2" onblur="samepasswd()"/>
 						</div>
 						<span id="tick_passwdsame"></span>
@@ -282,7 +282,7 @@ $(document).ready(function(){
 					<h3 class="text-info">Modify profile</h3>
 					<form role="form">
 						<div class="form-group">
-							 <label for="exampleInputTitle">telephone</label>
+							 <label for="exampleInputTitle">Telephone</label>
 							 <input type="text" class="form-control" id="phone" />
 						</div>
 						

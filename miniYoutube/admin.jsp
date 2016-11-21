@@ -89,8 +89,8 @@ catch (Exception e){
 					</ul>
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
-							<input type="text" class="form-control" />
-						</div> <button type="submit" class="btn btn-default">Submit</button>
+							<input type="text" name="search_query" placeholder="Search" class="form-control" />
+						</div> <button type="submit" class="btn btn-default" formaction="results.html">Submit</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						
