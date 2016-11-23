@@ -4,6 +4,7 @@
 
 	String vid = request.getParameter("vid");
 	String description = request.getParameter("description");
+	
 	String user1 = (String)session.getAttribute("username");
 	if(user1 == null) {
 		out.println("Please sign in first");

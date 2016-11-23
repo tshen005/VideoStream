@@ -2,9 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>test</title>
+  <title>VideoStream</title>
 
-  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="./lib/bootstrap/css/font-awesome.min.css">  
   <script src="./lib/jquery.js"></script>
   <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
@@ -17,78 +18,89 @@
 
 </head>
 <body onload="checkSession()">
-
+<div class="row clearfix">
+	<div class="col-md-12 column">
+		<nav class="navbar navbar-default" role="navigation">
+		
+			<div class="navbar-header">
+				 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">MiniYouTube</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li>
+						 <a href="index.html"><span class="icon-home">&nbsp</span>Home</a>
+					</li>
+					<li>
+						 <a href="#">History</a>
+					</li>
+				</ul>
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" />
+					</div> <button type="submit" class="btn btn-default"><span class="icon-search">&nbsp</span>Search</button>
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li id="ticket1">
+						<a href="signin.html">Sign in</a>
+					</li>
+					<li id="ticket2">
+						<a href="signup.html">Sign up</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</div>
 <div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<nav class="navbar navbar-default" role="navigation">
-				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">MiniYouTube</a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li class="active">
-							 <a href="index.html">Home</a>
-						</li>
-						<li>
-							 <a href="#">History</a>
-						</li>
-					</ul>
-					<form class="navbar-form navbar-left" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" />
-						</div> <button type="submit" class="btn btn-default">Submit</button>
-					</form>
-					<ul class="nav navbar-nav navbar-right">
-						<li id="ticket1">
-							<a href="signin.html">Sign in</a>
-						</li>
-						<li id="ticket2">
-							<a href="signup.html">Sign up</a>
-						</li>
-						
-					</ul>
-				</div>
-			</nav>
 			<div class="row clearfix">
 				<div class="col-md-4 column">
 					<div>
 						<h3 class="text-info">Sign Up</h3>
+						<span id="check_ticket"></span>
 						<div class="input-group input-group-lg">
-				            <span class="input-group-addon">username</span>
+				            <span class="input-group-addon"><span class="icon-user"></span></span>
 				            <input type="text" id="username"class="form-control" placeholder="username" onblur="userok()">
-				        </div></br>
+				        </div>
+				        <span id="username_ticket"></span>
+				        </br>
 				        <div class="input-group input-group-lg">
-				            <span class="input-group-addon">email</span>
+				            <span class="input-group-addon"><span class="icon-envelope"></span></span>
 				            <input type="text" id="email" class="form-control" placeholder="email">
-				        </div></br>
+				        </div>
+				        <span id="email"></span>
+				        </br>
 				        <div class="input-group input-group-lg">
-				            <span class="input-group-addon">password</span>
+				            <span class="input-group-addon"><span class="icon-key"></span></span>
 				            <input type="password" id="passwd" class="form-control" placeholder="password" onblur="samepasswd()">
-				        </div></br>
+				        </div>
+				        <span id="passwd_ticket1"></span>
+				        </br>
 				        <div class="input-group input-group-lg">
-				            <span class="input-group-addon">password</span>
+
+				            <span class="input-group-addon"><span class="icon-key"></span></span>
 				            <input type="password" id="passwd2" class="form-control" placeholder="confirm password" onblur="samepasswd()"/>
-				            <span id="tick_passwdsame"></span>
-				        </div></br>
+				        </div>
+				        <span id="passwd_ticket2" ></span>
+				        </br>
 				        <div id="a">
 					        <div  id="check_box" style="width:10px;display:inline">
 								<div class="col-md-6 column">
-									<input type="text" class="form-control" id="check2" name="check" placeholder="CAPTCHA" onfocus="loadCode2()" onblur="validate2()"/>
+									<input type="text" class="form-control" id="check2" name="check" placeholder="CAPTCHA" onfocus="loadCode2()" onblur="validate2()" onclick="createCode2()"/>
 								</div>
 								<div class="col-md-4 column">
-									<input type="button" class="form-control" id="code2" name="code" onclick="createCode2()"/>
+									<input type="button" class="form-control" id="code2" name="code" onclick="createCode2()" />
 								</div>
-								<input type="hidden" id="codeNo2" name="codeNo2"/>
+								<input type="hidden" id="codeNo2" name="codeNo2"/><span id="code_ticket"></span>
 							</div></br>
 						</div></br>
-				        <button type="button" class="btn btn-primary" data-toggle="button" onclick="signup()">submit</button>
+				        <button type="button" class="btn btn-primary" data-toggle="button" onclick="signup()">submit</button> <span>Already have an account? <a href="signin.html">Sign in now.</a></span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+</br>
 </body>
 
 <footer>

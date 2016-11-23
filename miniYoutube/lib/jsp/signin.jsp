@@ -18,6 +18,7 @@
 	if(rs.next()) {
 		if (rs.getString("Password").equals(password)) {
 			if(rs.getString("Admin").equals("1")) {
+				session.setAttribute("username", username);
 				out.println("3");
 			}
 			else{

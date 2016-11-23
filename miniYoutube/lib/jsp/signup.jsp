@@ -13,10 +13,9 @@
 	Class.forName(driver);
 	Connection conn = DriverManager.getConnection(url, user, passwd);
 	Statement statement = conn.createStatement();
-	String sql = "select * from user where Name = '" + username + "'";
+	String sql = "select * from user where Name = '" + username + "' OR EmailAdd='"+email+"'";
 	ResultSet rs = statement.executeQuery(sql);
-//	String sql1 = "select * from user where EmailAdd = '" + email + "'";
-//	ResultSet rs1 = statement.executeQuery(sql1);
+	
 	if(rs.next()) {
 		out.println("0");
 		return;

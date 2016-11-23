@@ -57,9 +57,10 @@ catch (Exception e){
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>test</title>
+  <title>VideoStream</title>
 
-  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="./lib/bootstrap/css/font-awesome.min.css">  
   <script src="./lib/jquery.js"></script>
   <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
@@ -70,9 +71,7 @@ catch (Exception e){
 <script type="text/javascript" src="v3/scripts.min.js"></script>
 </head>
 <body>
-
-<div class="container">
-	<div class="row clearfix">
+<div class="row clearfix">
 		<div class="col-md-12 column">
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
@@ -81,7 +80,7 @@ catch (Exception e){
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="active">
-							 <a href="index.html">Home</a>
+							 <a href="index.html" class="icon-home"> Home</a>
 						</li>
 						<li>
 							 <a href="#">History</a>
@@ -90,25 +89,25 @@ catch (Exception e){
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" />
-						</div> <button type="submit" class="btn btn-default">Submit</button>
+						</div> <button type="submit" class="btn btn-default icon-search"> Search</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						
 						<li>
-							 <a href="#" onclick="signouta()">Sign out</a>
+							 <a href="#" class="icon-off" onclick="signouta()"> Sign out</a>
 						</li>
 						
 					</ul>
 				</div>
 			</nav>
 
+<div class="container">
+	
 			<%=table%>
     		<br><br>
 			<div style="float:right">
-		        <a href="admin.jsp?pgno=<%=pgprev%>&pgcnt=10">
-		        prev page</a>    &nbsp;
-		        <a href="admin.jsp?pgno=<%=pgnext%>&pgcnt=10">
-		        next page</a>
+		        <a href="admin.jsp?pgno=<%=pgprev%>&pgcnt=10" class=" icon-double-angle-left"></a>    &nbsp;
+		        <a href="admin.jsp?pgno=<%=pgnext%>&pgcnt=10" class=" icon-double-angle-right"></a>
 		    </div>	
 		</div>
 	</div>

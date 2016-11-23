@@ -30,10 +30,7 @@
 		xmlStr = xmlStr+"<content>"+content+"</content>";
 		//xmlStr = xmlStr+"<uploaderr>"+uploader+"</uploaderr>";
 		xmlStr = xmlStr+"<time>"+time+"</time>";
-		//xmlStr = xmlStr+"<description>"+description+"</description>";
-		//xmlStr = xmlStr+"<like>"+like+"</like>";
-		//xmlStr = xmlStr+"<dislike>"+dislike+"</dislike>";
-
+		
 		xmlStr = xmlStr +"</mmsg>";
 	}
 	xmlStr = xmlStr +"</message>";

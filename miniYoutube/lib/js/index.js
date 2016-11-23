@@ -16,7 +16,7 @@ function checkSession() {
 				var msg = xmlhttp.responseText;
 				if (msg != 0) {
 					signinin.innerHTML="<a href=\"userpage.html\" id=\"signinin\">My profile</a>";
-					signupup.innerHTML="<a href=\"#\" id=\"signinin\" onclick=\"signout()\">Sign out</a>";
+					signupup.innerHTML="<a href=\"#\" id=\"signinin\" class=\"icon-off\" onclick=\"signout()\"> Sign out</a>";
 
 				}
 				else {
@@ -169,10 +169,10 @@ function validate2(){
 function samepasswd() {
 	var passwd1 = document.getElementById("passwd");
 	var passwd2 = document.getElementById("passwd2");
-	var x = document.getElementById("tick_passwdsame");
+	var x = document.getElementById("passwd_ticket2");
 	if (passwd1 == "" || passwd2 == "") {}
 	else if (passwd1 == passwd2) {
-		x.innerHTML = "<img src = \"./images/004_16.png\"/>";
+		x.innerHTML = "<span class=\"icon-ok\"></span>";
 	//	alert("success");
 	}
 	else{
@@ -187,25 +187,26 @@ function signin() {
 	var p = document.getElementById("passwd").value;
 	var c = document.getElementById("check").value;
 
-//	var x = document.getElementById("tick_user");
-//	var y = document.getElementById("tick_passwd");
-//	var z = document.getElementById("tick_check");
+	var x = document.getElementById("username_ticket");
+	var y = document.getElementById("passwd_ticket");
+	var z = document.getElementById("code_ticket");
+	var zy = document.getElementById("check_ticket");
 	
 	if (u.length < 1) {
-//		x.innerHTML = "<img src = \"./images/001_75.png\"/>";
+		x.innerHTML = "<span class=\"icon-remove\"></span>";
 		return;
 	}
 	if (p.length < 1) {
-//		y.innerHTML = "<img src = \"./images/001_75.png\"/>";
+		y.innerHTML = "<span class=\"icon-remove\"></span>";
 		return;
 	}
 	if (c.toUpperCase() != code) {
-//		z.innerHTML = "<img src = \"./images/001_75.png\"/>";
+		z.innerHTML = "<span class=\"icon-remove\"></span>";
 		return;
 	}
 
 	if (c.toUpperCase() == code) {
-//		z.innerHTML = "<img src = \"./images/004_16.png\"/>";
+		z.innerHTML = "<span class=\"icon-ok\"></span>";
 		var xmlhttp;
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
@@ -217,13 +218,12 @@ function signin() {
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				var msg = xmlhttp.responseText;
-	//			alert("sdfwwwww");
 				if (msg == 0) {
-	//				x.innerHTML="<img src = \"./images/001_75.png\"/>";
+					zy.innerHTML="<div class=\"alert alert-danger\">Incorrect username or password</div>";
 					return;
 				}
 				else if (msg == 1) {
-	//				y.innerHTML="<img src = \"./images/001_75.png\"/>";
+					zy.innerHTML="<div class=\"alert alert-danger\">Incorrect username or password</div>";
 					return;
 				}
 				else if (msg == 3) {
@@ -272,6 +272,7 @@ function userok() {
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				x.innerHTML=xmlhttp.responseText;
+
 			}
 		}
 		
@@ -284,22 +285,16 @@ function userok() {
 
 
 function signup() {
-//	alert("sdfdsfdfsdfs");
-	var u = document.getElementById("username").value;
 
+	var u = document.getElementById("username").value;
 	var e = document.getElementById("email").value;
-	
 	var p1 = document.getElementById("passwd").value;
-	
 	var p2 = document.getElementById("passwd2").value;
-//	var g = document.getElementsByName("gender");
 	var c = document.getElementById("check2").value;
 	
-//	var x = document.getElementById("tick_user2");
-//	var y = document.getElementById("tick_passwdsame");
-//	var z = document.getElementById("tick_check2");
-	
-	alert(c);
+	var x = document.getElementById("username_ticket");
+	var c = document.getElementById("check2");
+	var c = document.getElementById("check2");
 	
 	if (u.length < 4 || u.length > 20) {
 //		x.innerHTML = "<img src = \"./images/001_75.png\"/>";
@@ -334,10 +329,8 @@ function signup() {
 				}
 				else {
 					alert("ok");
-					//String add = "./index.html?uid=" + u;
-					//window.location.href=add;
+					
 					window.location.href="./index.html";
-					//window.history.back();
 					return;
 				} 
 			}

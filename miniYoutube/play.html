@@ -2,9 +2,10 @@
 <html>
 <head>
 	<meta charset="utf-8"> 
-	<title>test</title>
+	<title>VideoStream</title>
 
 	<link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">  
+	 <link rel="stylesheet" href="./lib/bootstrap/css/font-awesome.min.css"> 
 <script src="./lib/jquery.js"></script>
 <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
@@ -18,21 +19,8 @@
 <body >
 
 <script type="text/javascript">
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = '//videostream-1.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
+
+
 	function getVideoID() {
 		var url = location.search;
 		var theRequest = new Object();
@@ -164,7 +152,6 @@ s.setAttribute('data-timestamp', +new Date());
 				xmlDoc = xmlhttp.responseText;
 				
 				
-				
 			}
 		}
 		
@@ -181,44 +168,48 @@ s.setAttribute('data-timestamp', +new Date());
 	
 </script>
 
+<div class="row clearfix">
+	<div class="col-md-12 column">
+		<nav class="navbar navbar-default" role="navigation">
+		
+			<div class="navbar-header">
+				 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">MiniYouTube</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li>
+						 <a href="index.html"><span class="icon-home">&nbsp</span>Home</a>
+					</li>
+					<li>
+						 <a href="#">History</a>
+					</li>
+				</ul>
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" />
+					</div> <button type="submit" class="btn btn-default"><span class="icon-search">&nbsp</span>Search</button>
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li id="ticket1">
+						<a href="signin.html">Sign in</a>
+					</li>
+					<li id="ticket2">
+						<a href="signup.html">Sign up</a>
+					</li>
+				</ul>
+			</div>
+			
+		</nav>
+	</div>
+</div>
+
 <div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<nav class="navbar navbar-default" role="navigation">
-				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">MiniYouTube</a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li class="active">
-							 <a href="index.html">Home</a>
-						</li>
-						<li>
-							 <a href="#">History</a>
-						</li>
-					</ul>
-					<form class="navbar-form navbar-left" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" />
-						</div> <button type="submit" class="btn btn-default">Submit</button>
-					</form>
-					<ul class="nav navbar-nav navbar-right">
-						<li id="ticket1">
-							<a href="signin.html">Sign in</a>
-						</li>
-						<li id="ticket2">
-							<a href="signup.html">Sign up</a>
-						</li>
-						
-					</ul>
-				</div>
-			</nav>
 			<div class="row clearfix">
 				<div class="col-md-8 column">
 				<h3 id="title" class="text-info">Title of Video</h3>
 					<frame>
 						<html5>
-							<video id="urlV" height="400" width="750" controls>
+							<video id="urlV" height="400" width="730" controls>
 	 							<source src="./video/movie.mp4">
 							</video>
 						</html5>
@@ -234,14 +225,12 @@ s.setAttribute('data-timestamp', +new Date());
 					<p id="description">There will be a div of the introduction of the vidoe</p>
 				</div>
 				<div class="col-md-8 column">	
-			 		<button class="btn btn-default"  type="button" onclick="addlike()">
-			 			like <span id="likes"></span>
+			 		<button class="btn btn-default icon-thumbs-up"  type="button" onclick="addlike()"><span id="likes"></span>
 			 		</button> 
-			 		<button class="btn btn-default" type="button" onclick="adddislike()">
-			 			dislike <span id="dislikes"></span>
-			 		</button> 
-			 		<span id="views"></span><span > views</span>
-		 			<a id="modal-453069" href="#modal-container-453069" role="button" class="btn" data-toggle="modal" style="float:right">report</a>
+			 		<button class="btn btn-default icon-thumbs-down" type="button" onclick="adddislike()"><span id="dislikes"></span>
+			 		</button>  &nbsp &nbsp
+			 		<span id="views"></span><span >&nbsp views</span>
+		 			<a id="modal-453069" href="#modal-container-453069" role="button" class="btn icon-bell-alt" data-toggle="modal" style="float:right">report</a>
 					<div class="modal fade" id="modal-container-453069" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
@@ -265,27 +254,8 @@ s.setAttribute('data-timestamp', +new Date());
 				<div class="col-md-8 column">
 				
 					<h3 class="text-info">Comments</h3>
-					<div id="disqus_thread"></div>
-					<!-- Input timestamp form -->
-					<form>
-						<input type="checkbox" id="timed" value="timed">Timed<br>
-						
-						<div id="inputtime">
-							Timestamp: 
-							<input type="text" placeholder="Time" />
-						</div>
-						<script>
-						$('#inputtime').hide();
-						$('#timed').click(function() {
-							if ($(this).is(':checked')) {
-								$('#inputtime').show();
-							} else {
-								$('#inputtime').hide();
-							}
-						});
-						</script>
-					</form>
-					
+					<textarea class="form-control" id="description111" placeholder="reason" rows="5"></textarea>
+					<button type="button" class="btn btn-default" data-dismiss="modal">submit</button>
 				</div>	
 			</div>
 		</div>
