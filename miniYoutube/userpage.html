@@ -83,6 +83,53 @@ function getProfile() {
 	xmlhttp.send();
 }
 
+function getVideo() {
+	var xmlDoc;
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else {// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			xmlDoc = xmlhttp.responseXML;
+			
+			var u=xmlDoc.getElementsByTagName("mmsgup");
+			var f=xmlDoc.getElementsByTagName("mmsgf");
+			
+			var vidu=xmlDoc.getElementsByTagName("videoID");
+			var urlvu=xmlDoc.getElementsByTagName("urlV");
+			var videoNameu=xmlDoc.getElementsByTagName("videoName");
+			var urlcu=xmlDoc.getElementsByTagName("urlC");
+			var txtu="";
+			var txtf="";
+			var vidf=xmlDoc.getElementsByTagName("videoIDf");
+			var urlvf=xmlDoc.getElementsByTagName("urlVf");
+			var videoNamef=xmlDoc.getElementsByTagName("videoNamef");
+			var urlcf=xmlDoc.getElementsByTagName("urlCf");
+			//alert(vidf[0].childNodes[0].nodeValue);
+			for(var i=0;i < u.length;++i) {
+				txtu=txtu+"<div class=\"col-sm-6 col-md-3\"><a href=\"play.html?vid="+vidu[i].childNodes[0].nodeValue+"\" class=\"thumbnail\"><img src=\""+urlcu[i].childNodes[0].nodeValue+"\"alt=\""+videoNameu[i].childNodes[0].nodeValue+"\"><p>"+videoNameu[i].childNodes[0].nodeValue+"</p></a></div>";
+			}
+
+			for(var i=0;i < f.length;++i) {
+				txtf=txtf+"<div class=\"col-sm-6 col-md-3\"><a href=\"play.html?vid="+vidf[i].childNodes[0].nodeValue+"\" class=\"thumbnail\"><img src=\""+urlcf[i].childNodes[0].nodeValue+"\"alt=\""+videoNamef[i].childNodes[0].nodeValue+"\"><p>"+videoNamef[i].childNodes[0].nodeValue+"</p></a></div>";
+			}
+			//alert(txtu);
+			document.getElementById("uploadsvideo").innerHTML=txtu;
+			document.getElementById("favorites").innerHTML=txtf;		
+		}
+	}
+	
+	xmlhttp.open("GET","./lib/jsp/loadHistory.jsp",false);
+	//xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+	xmlhttp.send();
+}
+
 function modifyprofile() {
 	var x1 = document.getElementById("phone").value;
 	var x2 = document.getElementById("address").value;
@@ -120,6 +167,7 @@ function modifyprofile() {
 $(document).ready(function(){
 	window.onload=getSession();
 	window.onload=getProfile();
+	window.onload=getVideo();
 });
 
 </script>
@@ -176,16 +224,24 @@ $(document).ready(function(){
 											show2.style.display="none";
 											var show3 = document.getElementById("uploadprofile");
 											show3.style.display="none";
+											var show4 = document.getElementById("history");
+											show4.style.display="none";
 
 										}
 									</script>
 								</div>
 								<div class="panel-body">
-									<a href="#" class="icon-file-alt" onclick="awe()"> History</a>
+									<a href="#" class="icon-file-alt" onclick="history()"> History</a>
 									<script type="text/javascript">
-										function awe() {
-											var a = document.getElementById("username");
-											alert("Not implement yet...");
+										function history() {
+											var show1 = document.getElementById("upload");
+											show1.style.display="none";
+											var show2 = document.getElementById("uploadpwd");
+											show2.style.display="none";
+											var show3 = document.getElementById("uploadprofile");
+											show3.style.display="none";
+											var show4 = document.getElementById("history");
+											show4.style.display="block";
 										}
 									</script>
 								</div>
@@ -199,13 +255,15 @@ $(document).ready(function(){
 								<div class="panel-body">
 									<a href="#" onclick="showUploadprofile()"> Modify profile</a>
 									<script type="text/javascript">
-									function showUploadprofile() {
+										function showUploadprofile() {
 											var show1 = document.getElementById("uploadpwd");
 											show1.style.display="none";
 											var show2 = document.getElementById("upload");
 											show2.style.display="none";
 											var show3 = document.getElementById("uploadprofile");
 											show3.style.display="block";
+											var show4 = document.getElementById("history");
+											show4.style.display="none";
 										}
 									</script>
 								</div>
@@ -219,6 +277,8 @@ $(document).ready(function(){
 											show2.style.display="none";
 											var show3 = document.getElementById("uploadprofile");
 											show3.style.display="none";
+											var show4 = document.getElementById("history");
+											show4.style.display="none";
 										}
 									</script>
 								</div>
@@ -249,17 +309,18 @@ $(document).ready(function(){
 							 <label for="exampleInputFile">Upload cover</label>
 							 <input type="file" id="upcover" name="Cover" multiple="multiple" />
 						</div>
-						<div class="checkbox">
-							 <label><input name="radiobox" type="radio" id="public" value="public"/> Public</label>    
-							 <label><input name="radiobox" type="radio" id="private" value="private"/> Private</label>
-							 <label><input name="radiobox" type="radio" id="friendOnly" value="friendOnly"/> Friend only</label>
-						</div> 
+						
 						<button type="submit" class="btn btn-default">Submit</button>
 					</form>
 				</div>
 				<div class="col-md-8 column" id="history" style="display:none">
-					<h3 class="text-info">History</h3>
-					<p>Wait...</p>
+					<h3 class="text-info">Uploads</h3>
+					<div id="uploadsvideo" class="row">
+
+					</div>
+					<h3 class="text-info">Favorites</h3>
+					<div id="favorites" class="row">
+					</div>
 				</div>
 				<div class="col-md-8 column" id="uploadpwd" style="display:none">
 					<h3 class="text-info">Upload password</h3>

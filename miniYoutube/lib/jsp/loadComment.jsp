@@ -14,7 +14,7 @@
 	Class.forName(driver);
 	Connection conn = DriverManager.getConnection(url, user, passwd);
 	Statement statement = conn.createStatement();
-	String sql = "select * from comments where VideoID = '" + vid + "'";
+	String sql = "select * from comments where VideoID = '" + vid + "' order by CommentID desc";
 	ResultSet rs = statement.executeQuery(sql);
 
 	xmlStr = xmlStr+"<message>";

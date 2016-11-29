@@ -18,6 +18,106 @@
 </head>
 <body >
 
+<style type="text/css">
+
+p {
+    margin: 0 0 1em;
+}
+
+.comment {
+    overflow: hidden;
+    padding: 0 0 1em;
+    border-bottom: 1px solid #ddd;
+    margin: 0 0 1em;
+    *zoom: 1;
+}
+
+.comment-img {
+    float: left;
+    margin-right: 33px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.comment-img img {
+    display: block;
+}
+
+.comment-body {
+    overflow: hidden;
+}
+
+.comment .text {
+    padding: 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.comment .text p:last-child {
+    margin: 0;
+}
+
+.comment .attribution {
+    margin: 0.5em 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+
+.comments,
+.comment {
+    position: relative;
+}
+
+.comments:before,
+.comment:before,
+.comment .text:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 65px;
+}
+
+.comments:before {
+    width: 3px;
+    top: -5px;
+    bottom: -5px;
+    background: rgba(0,0,0,0.1);
+}
+
+.comment:before {
+    width: 9px;
+    height: 9px;
+    border: 3px solid #fff;
+    border-radius: 100px;
+    margin: 16px 0 0 -6px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2), inset 0 1px 1px rgba(0,0,0,0.1);
+    background: #ccc;
+}
+
+.comment:hover:before {
+    background: orange;
+}
+
+.comment .text:before {
+    top: 18px;
+    left: 78px;
+    width: 9px;
+    height: 9px;
+    border-width: 0 0 1px 1px;
+    border-style: solid;
+    border-color: #e5e5e5;
+    background: #fff;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
+
+
+</style>
+
 <script type="text/javascript">
 
 
@@ -86,7 +186,9 @@
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				var msg = xmlhttp.responseText;
+				document.getElementById("likea").className="btn btn-primary icon-thumbs-up";
 				document.getElementById("likes").innerHTML=msg;
+				
 			}
 		}
 		xmlhttp.open("GET","./lib/jsp/addlike.jsp?vid="+vid,true);
@@ -105,17 +207,88 @@
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				//alert(msg);
 				var msg = xmlhttp.responseText;
+				document.getElementById("dislikea").className="btn btn-primary icon-thumbs-down";
 				document.getElementById("dislikes").innerHTML=msg;
+				
 			}
 		}
 		xmlhttp.open("GET","./lib/jsp/adddislike.jsp?vid="+vid,true);
 		xmlhttp.send();
 	}
 
+	function addfavorite() {
+		var fa=document.getElementById("favorite");
+
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				var msg = xmlhttp.responseText;
+				if(msg == 1) {
+					fa.innerHTML="<a title=\"remove from favorites\" role=\"button\" onclick=\"removefavorite()\" class=\"icon-star\"></a>";
+				}
+				if(msg == 0) {
+					alert("Please sign in first.");
+				}
+			}
+		}
+		xmlhttp.open("POST","./lib/jsp/addfa.jsp?vid="+vid,true);
+		xmlhttp.send();
+	}
+
+	function removefavorite() {
+		var fa=document.getElementById("favorite");
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				var msg = xmlhttp.responseText;
+				if(msg == 1) {
+					fa.innerHTML="<a title=\"add to favorites\" role=\"button\" onclick=\"removefavorite()\" class=\"icon-star\"></a>";
+				}
+				if(msg == 0) {
+					alert("Please sign in first.");
+				}
+			}
+		}
+		xmlhttp.open("POST","./lib/jsp/removefa.jsp?vid="+vid,true);
+		xmlhttp.send();
+	}
+
+	function checkFavorite() {
+		var fa=document.getElementById("favorite");
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				var msg = xmlhttp.responseText;
+				if(msg == 1) {
+					fa.innerHTML="<a title=\"remove from favorites\" role=\"button\" onclick=\"removefavorite()\" class=\"icon-star\"></a>";
+				}
+			}
+		}
+		xmlhttp.open("POST","./lib/jsp/checkfa.jsp?vid="+vid,true);
+		xmlhttp.send();
+	}
+
 	function report() {
 		var description = document.getElementById("description111").value;
 		var xmlhttp;
-		alert(description);
 		
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
@@ -136,34 +309,72 @@
 		xmlhttp.send();
 	}
 
-	function loadcomment() {
-		var xmlDoc;
+	function uploadcomment() {
+		var com = document.getElementById("comment").value;
 		var xmlhttp;
-		//document.getElementById("views").innerHTML="232";
+		var flag = 0;
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
 		}
 		else {// code for IE6, IE5
 			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 		}
-
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-				xmlDoc = xmlhttp.responseText;
+				var msg = xmlhttp.responseText;
+				if(msg == 0) {
+					alert("Please sign in first.");
+				}
+				else if(msg == 1) {
+					document.getElementById("comment").value="";
+					loadcomment();
+				}
+			}
+			
+		}
+		
+		xmlhttp.open("POST","./lib/jsp/uploadcomment.jsp?vid="+vid+"&com="+com,true);
+		xmlhttp.send();
+	}
+
+	function loadcomment() {
+		var xmlDoc;
+		var xmlhttp;
+		
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		var txt="";
+		
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				xmlDoc = xmlhttp.responseXML;
+				var x1 = xmlDoc.getElementsByTagName("mmsg");
+				var username=xmlDoc.getElementsByTagName("name");
+				var time=xmlDoc.getElementsByTagName("time");
+				var content=xmlDoc.getElementsByTagName("content");
+				for(var i = 0;i < x1.length;++ i) {
+					txt=txt+"<article class=\"comment\"><a class=\"comment-img\" href=\"#non\"><img src=\"./images/default.jpg\" alt=\"\" width=\"50\" height=\"50\" class=\"img-circle\"></a><div class=\"comment-body\"><div class=\"text\"><p id=\"content\">"+content[i].childNodes[0].nodeValue+"</p></div><p class=\"attribution\">by <span style=\"color:rgb(29, 75, 172)\">"+username[i].childNodes[0].nodeValue+"</span> at <span>"+time[i].childNodes[0].nodeValue+"</span></p></div></article>";
+					
+				}
 				
-				
+				document.getElementById("comments").innerHTML=txt;				
 			}
 		}
 		
 		xmlhttp.open("GET","./lib/jsp/loadComment.jsp?vid="+vid,true);
 		xmlhttp.send();
+
 	}
 
 	$(document).ready(function(){
 		window.onload=checkSession();
-		window.onload=loadvideo();
+		window.onload=checkFavorite();
 		window.onload=loadcomment();
-
+		window.onload=loadvideo();
 	});
 	
 </script>
@@ -209,7 +420,7 @@
 				<h3 id="title" class="text-info">Title of Video</h3>
 					<frame>
 						<html5>
-							<video id="urlV" height="400" width="730" controls>
+							<video id="urlV" height="400" width="730" style="background-color:black" controls>
 	 							<source src="./video/movie.mp4">
 							</video>
 						</html5>
@@ -225,12 +436,13 @@
 					<p id="description">There will be a div of the introduction of the vidoe</p>
 				</div>
 				<div class="col-md-8 column">	
-			 		<button class="btn btn-default icon-thumbs-up"  type="button" onclick="addlike()"><span id="likes"></span>
+			 		<button class="btn btn-default icon-thumbs-up" id="likea" type="button" onclick="addlike()"><span id="likes"></span>
 			 		</button> 
-			 		<button class="btn btn-default icon-thumbs-down" type="button" onclick="adddislike()"><span id="dislikes"></span>
+			 		<button class="btn btn-default icon-thumbs-down" id="dislikea" type="button" onclick="adddislike()"><span id="dislikes"></span>
 			 		</button>  &nbsp &nbsp
-			 		<span id="views"></span><span >&nbsp views</span>
-		 			<a id="modal-453069" href="#modal-container-453069" role="button" class="btn icon-bell-alt" data-toggle="modal" style="float:right">report</a>
+			 		<span id="views"></span><span >&nbsp views</span>  &nbsp &nbsp   &nbsp &nbsp   &nbsp &nbsp   &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp   &nbsp &nbsp   &nbsp &nbsp   &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp   &nbsp &nbsp   &nbsp &nbsp   &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp   &nbsp &nbsp   &nbsp 
+			 		<span id="favorite"><a title="add to favorites" role="button" onclick="addfavorite()" class="icon-star-empty"></a></span>&nbsp &nbsp
+		 			<a id="modal-453069" href="#modal-container-453069" role="button" class="btn icon-bell-alt" data-toggle="modal" style="float:right">&nbspreport&nbsp &nbsp</a>
 					<div class="modal fade" id="modal-container-453069" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
@@ -254,10 +466,25 @@
 				<div class="col-md-8 column">
 				
 					<h3 class="text-info">Comments</h3>
-					<textarea class="form-control" id="description111" placeholder="reason" rows="5"></textarea>
-					<button type="button" class="btn btn-default" data-dismiss="modal">submit</button>
-				</div>	
+
+					<textarea class="form-control" id="comment" placeholder="comment" rows="5"></textarea>
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="uploadcomment()" style="float:right">submit</button></br></br>
+				</br>
+				</div>
+				</br></br>
+				</br>
+					</br>
+
+				<div class="col-md-8 column">
+					<section class="comments" id="comments">
+						<article class="comment">
+	    					<p>NULL</p>
+    					</article>
+
+					</section>
+				</div>
 			</div>
+
 		</div>
 	</div>
 </div>

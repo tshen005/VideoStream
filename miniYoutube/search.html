@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>VideoStream</title>
+
+  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./lib/bootstrap/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./CSS/accessibility_foundicons.css">
+  <link rel="stylesheet" href="./CSS/stylesheets/general_foundicons.css">
+  <script src="./lib/jquery.js"></script>
+  <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" src="v3/jquery.htmlClean.js"></script>
+<script type="text/javascript" src="v3/scripts.min.js"></script>
+<script type="text/javascript" src="./lib/js/index.js"></script>
+
+<style type="text/css">
+
+.navbar{
+
+	box-shadow: -2px -2px 8px gray;
+	filter:alpha(opacity=95);
+	opacity:0.95;
+	margin-bottom: 0px;
+}
+
+footer .container{
+	background-color: rgb(246,246,246);
+}
+.thumbnail {
+	min-height: 200px;
+	max-height: 200px;
+	min-width: 250px;
+	max-width: 250px;
+}
+
+.thumbnail>p {
+	text-align: center;
+	position: relative;
+	bottom: 1px;
+}
+
+</style>
+
+</head>
+
+<body>
+<script type="text/javascript">
+
+
+  var username="";
+  var videocount=0;
+  function getVideoQuery() {
+		var url = location.search;
+		var theRequest = new Object();
+		if(url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for(var i = 0;i < strs.length;++ i) {
+				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+			}
+		}
+		var querystr = theRequest["query"];
+		return querystr;
+	}
+	var VideoQuery = getVideoQuery();
+
+
+  function getSession() {
+  	var xmlhttp;
+  	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+  		xmlhttp=new XMLHttpRequest();
+  	}
+  	else {// code for IE6, IE5
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+
+  	xmlhttp.onreadystatechange=function() {
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+  			var msg = xmlhttp.responseText;
+  			if (msg != 0) {
+  				username=msg;
+  				var tmp= document.getElementById("username");
+  				tmp.innerHTML=msg;
+  				//alert(tmp.innerHTML);
+  			}
+  			else {
+  				window.location.href="./signin.html";
+  				return;
+  			}
+  		}
+  	}
+
+  	xmlhttp.open("POST","./lib/jsp/checkSession.jsp",true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  	xmlhttp.send();
+  }
+
+
+  function Last1Hour(){
+
+    for(var i=0;i<videocount;i++){
+
+        var stri=String(i);
+
+        var videotime=document.getElementById("video"+stri+"_time");
+        var timestring=videotime.innerHTML;
+        var curindex=timestring.indexOf('PST');
+        var sub_timestring=timestring.substring(0,curindex-1);
+        var sub_substring1=sub_timestring.substring(0,10);
+        var sub_substring2=sub_timestring.substring(11,curindex-1);
+        sub_substring1=sub_substring1+" 2016 ";
+        sub_substring1=sub_substring1+sub_substring2;
+        //var lastindex=sub_timestring.indexOf('Nov');
+        //alert(String(lastindex));
+        //var final_string=sub_substring1.substring()
+        var CurrentTime=Date.now();
+        //alert(Date.parse(sub_substring1));
+        //alert(sub_substring1);
+        videotime.parentNode.parentNode.setAttribute("style","display");
+        if(CurrentTime>(Date.parse(sub_substring1)+3600000)){
+          videotime.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LastDay(){
+
+    for(var i=0;i<videocount;i++){
+
+        var stri=String(i);
+
+        var videotime=document.getElementById("video"+stri+"_time");
+        var timestring=videotime.innerHTML;
+        var curindex=timestring.indexOf('PST');
+        var sub_timestring=timestring.substring(0,curindex-1);
+        var sub_substring1=sub_timestring.substring(0,10);
+        var sub_substring2=sub_timestring.substring(11,curindex-1);
+        sub_substring1=sub_substring1+" 2016 ";
+        sub_substring1=sub_substring1+sub_substring2;
+        //var lastindex=sub_timestring.indexOf('Nov');
+        //alert(String(lastindex));
+        //var final_string=sub_substring1.substring()
+        var CurrentTime=Date.now();
+        //alert(Date.parse(sub_substring1));
+        //alert(sub_substring1);
+        videotime.parentNode.parentNode.setAttribute("style","display");
+        if(CurrentTime>(Date.parse(sub_substring1)+86400000)){
+          videotime.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LastWeek(){
+
+    for(var i=0;i<videocount;i++){
+
+        var stri=String(i);
+
+        var videotime=document.getElementById("video"+stri+"_time");
+        var timestring=videotime.innerHTML;
+        var curindex=timestring.indexOf('PST');
+        var sub_timestring=timestring.substring(0,curindex-1);
+        var sub_substring1=sub_timestring.substring(0,10);
+        var sub_substring2=sub_timestring.substring(11,curindex-1);
+        sub_substring1=sub_substring1+" 2016 ";
+        sub_substring1=sub_substring1+sub_substring2;
+        //var lastindex=sub_timestring.indexOf('Nov');
+        //alert(String(lastindex));
+        //var final_string=sub_substring1.substring()
+        var CurrentTime=Date.now();
+        //alert(Date.parse(sub_substring1));
+        //alert(sub_substring1);
+        videotime.parentNode.parentNode.setAttribute("style","display");
+        if(CurrentTime>(Date.parse(sub_substring1)+604800000)){
+          videotime.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LastMonth(){
+
+    for(var i=0;i<videocount;i++){
+
+        var stri=String(i);
+
+        var videotime=document.getElementById("video"+stri+"_time");
+        var timestring=videotime.innerHTML;
+        var curindex=timestring.indexOf('PST');
+        var sub_timestring=timestring.substring(0,curindex-1);
+        var sub_substring1=sub_timestring.substring(0,10);
+        var sub_substring2=sub_timestring.substring(11,curindex-1);
+        sub_substring1=sub_substring1+" 2016 ";
+        sub_substring1=sub_substring1+sub_substring2;
+        var CurrentTime=Date.now();
+        //alert(Date.parse(sub_substring1));
+        //alert(sub_substring1);
+        videotime.parentNode.parentNode.setAttribute("style","display");
+        if(CurrentTime>(Date.parse(sub_substring1)+2592000000)){
+          videotime.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function GreaterThan100(){
+
+    for(var i=0;i<videocount;i++){
+        //alert(videocount);
+        var stri=String(i);
+
+        var views=document.getElementById("video"+stri+"_views");
+        var viewstr=views.innerHTML;
+        views.parentNode.parentNode.setAttribute("style","display");
+        if(parseInt(viewstr)<100){
+          views.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LessThan100(){
+
+    for(var i=0;i<videocount;i++){
+        //alert(videocount);
+        var stri=String(i);
+
+        var views=document.getElementById("video"+stri+"_views");
+        var viewstr=views.innerHTML;
+        views.parentNode.parentNode.setAttribute("style","display");
+        if((parseInt(viewstr)>=100)||(parseInt(viewstr)<=50)){
+          views.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LessThan50(){
+
+    for(var i=0;i<videocount;i++){
+        //alert(videocount);
+        var stri=String(i);
+
+        var views=document.getElementById("video"+stri+"_views");
+        var viewstr=views.innerHTML;
+        views.parentNode.parentNode.setAttribute("style","display");
+        if((parseInt(viewstr)>=50)||(parseInt(viewstr)<=20)){
+          views.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LessThan20(){
+
+    for(var i=0;i<videocount;i++){
+        //alert(videocount);
+        var stri=String(i);
+
+        var views=document.getElementById("video"+stri+"_views");
+        var viewstr=views.innerHTML;
+        views.parentNode.parentNode.setAttribute("style","display");
+        if(parseInt(viewstr)>20){
+          views.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LikesGreaterThan100(){
+
+    for(var i=0;i<videocount;i++){
+        //alert(videocount);
+        var stri=String(i);
+
+        var likes=document.getElementById("video"+stri+"_likes");
+        var likestr=likes.innerHTML;
+        likes.parentNode.parentNode.setAttribute("style","display");
+        if(parseInt(likestr)<100){
+          likes.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LikesLessThan100(){
+
+    for(var i=0;i<videocount;i++){
+        //alert(videocount);
+        var stri=String(i);
+
+        var likes=document.getElementById("video"+stri+"_likes");
+        var likestr=likes.innerHTML;
+        likes.parentNode.parentNode.setAttribute("style","display");
+        if((parseInt(likestr)>=100)||(parseInt(likestr)<=50)){
+          likes.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LikesLessThan50(){
+
+    for(var i=0;i<videocount;i++){
+        //alert(videocount);
+        var stri=String(i);
+
+        var likes=document.getElementById("video"+stri+"_likes");
+        var likestr=likes.innerHTML;
+        likes.parentNode.parentNode.setAttribute("style","display");
+        if((parseInt(likestr)>=50)||(parseInt(likestr)<=20)){
+          likes.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+  function LikesLessThan20(){
+
+    for(var i=0;i<videocount;i++){
+        //alert(videocount);
+        var stri=String(i);
+
+        var likes=document.getElementById("video"+stri+"_likes");
+        var likestr=likes.innerHTML;
+        likes.parentNode.parentNode.setAttribute("style","display");
+        if(parseInt(likestr)>20){
+          likes.parentNode.parentNode.setAttribute("style","display:none");
+        }
+    }
+  }
+
+
+
+  function SortByTime(){
+    var xmlhttp;
+    var xmlDoc;
+    //alert("sdf");
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+    }
+    else {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange=function() {
+    //  alert(xmlhttp.readyState+xmlhttp.status);
+      if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+
+      /*  $(document).ready(function(){
+          $("#timesort").click(function(){
+            $("#result").empty();
+          });
+        });*/
+        xmlDoc = xmlhttp.responseXML;
+        //alert(xmlDoc);
+        var videoid = xmlDoc.getElementsByTagName("vid");
+        //var gender = xmlDoc.getElementsByTagName("gender");
+        //alert(videoid.length);
+        var videoname = xmlDoc.getElementsByTagName("videoname");
+        var videotime = xmlDoc.getElementsByTagName("Time");
+        var videoviews = xmlDoc.getElementsByTagName("Views");
+        var videolikes = xmlDoc.getElementsByTagName("Likes");
+        var imgcover = xmlDoc.getElementsByTagName("Cover");
+        var sorttype = xmlDoc.getElementsByTagName("sort");
+
+        var res=document.getElementById("result");
+        videocount=videoid.length;
+        res.innerHTML="";
+
+
+        for(var j=0;j<videoid.length;j++){
+          var strj=String(j);
+          var div=document.createElement("div");
+          div.setAttribute("class","col-sm-6 col-md-3");
+          res.appendChild(div);
+          var a=document.createElement("a");
+          a.setAttribute("href","play.html?vid=");
+          a.setAttribute("class","thumbnail");
+          a.setAttribute("id","video"+strj);
+          div.appendChild(a);
+          var img=document.createElement("img");
+          //img.setAttribute("src","pICTURE");
+          img.setAttribute("alt","Picture Missing");
+          img.setAttribute("id","img"+strj);
+          a.appendChild(img);
+          var span1 =document.createElement("span");
+          span1.setAttribute("id","video"+strj+"_name");
+          var div1 =document.createElement("div");
+          div1.appendChild(span1);
+          a.appendChild(div1);
+          var span2 =document.createElement("span");
+          span2.setAttribute("id","video"+strj+"_time");
+          var div2 =document.createElement("div");
+          div2.appendChild(span2);
+          a.appendChild(div2);
+          var span3 =document.createElement("span");
+          span3.setAttribute("id","video"+strj+"_views");
+          var div3 =document.createElement("div");
+          div3.appendChild(span3);
+          a.appendChild(div3);
+          var span4 =document.createElement("span");
+          span4.setAttribute("id","video"+strj+"_likes");
+          var div4 =document.createElement("div");
+          div4.appendChild(span4);
+          a.appendChild(div4);
+        }
+
+
+        for(var i=0;i<videoid.length;i++){
+          var stri=String(i);
+          //alert(i);
+          //alert(videoname[i].childNodes[i].nodeValue);
+          document.getElementById("video"+stri+"_name").innerHTML=videoname[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri+"_time").innerHTML=videotime[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri+"_views").innerHTML=videoviews[i].childNodes[0].nodeValue+" viewers";
+          document.getElementById("video"+stri+"_likes").innerHTML=videolikes[i].childNodes[0].nodeValue+" likes";
+          document.getElementById("img"+stri).src=imgcover[i].childNodes[0].nodeValue;
+          var oldurl=document.getElementById("video"+stri).href;
+          var newurl=oldurl+videoid[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri).href=newurl;
+        }
+
+
+      }
+    }
+
+    xmlhttp.open("GET","./lib/jsp/search.jsp?query="+VideoQuery+"&sort=date",true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send();
+
+  }
+
+  function SortByLikes(){
+    var xmlhttp;
+    var xmlDoc;
+    //alert("sdf");
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+    }
+    else {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange=function() {
+    //  alert(xmlhttp.readyState+xmlhttp.status);
+      if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+
+      /*  $(document).ready(function(){
+          $("#timesort").click(function(){
+            $("#result").empty();
+          });
+        });*/
+        xmlDoc = xmlhttp.responseXML;
+        //alert(xmlDoc);
+        var videoid = xmlDoc.getElementsByTagName("vid");
+        //var gender = xmlDoc.getElementsByTagName("gender");
+        //alert(videoid.length);
+        var videoname = xmlDoc.getElementsByTagName("videoname");
+        var videotime = xmlDoc.getElementsByTagName("Time");
+        var videoviews = xmlDoc.getElementsByTagName("Views");
+        var videolikes = xmlDoc.getElementsByTagName("Likes");
+        var imgcover = xmlDoc.getElementsByTagName("Cover");
+        var sorttype = xmlDoc.getElementsByTagName("sort");
+
+        var res=document.getElementById("result");
+        videocount=videoid.length;
+        res.innerHTML="";
+
+        for(var j=0;j<videoid.length;j++){
+          var strj=String(j);
+          var div=document.createElement("div");
+          div.setAttribute("class","col-sm-6 col-md-3");
+          res.appendChild(div);
+          var a=document.createElement("a");
+          a.setAttribute("href","play.html?vid=");
+          a.setAttribute("class","thumbnail");
+          a.setAttribute("id","video"+strj);
+          div.appendChild(a);
+          var img=document.createElement("img");
+          //img.setAttribute("src","pICTURE");
+          img.setAttribute("alt","Picture Missing");
+          img.setAttribute("id","img"+strj);
+          a.appendChild(img);
+          var span1 =document.createElement("span");
+          span1.setAttribute("id","video"+strj+"_name");
+          var div1 =document.createElement("div");
+          div1.appendChild(span1);
+          a.appendChild(div1);
+          var span2 =document.createElement("span");
+          span2.setAttribute("id","video"+strj+"_time");
+          var div2 =document.createElement("div");
+          div2.appendChild(span2);
+          a.appendChild(div2);
+          var span3 =document.createElement("span");
+          span3.setAttribute("id","video"+strj+"_views");
+          var div3 =document.createElement("div");
+          div3.appendChild(span3);
+          a.appendChild(div3);
+          var span4 =document.createElement("span");
+          span4.setAttribute("id","video"+strj+"_likes");
+          var div4 =document.createElement("div");
+          div4.appendChild(span4);
+          a.appendChild(div4);
+        }
+
+
+        for(var i=0;i<videoid.length;i++){
+          var stri=String(i);
+          //alert(i);
+          //alert(videoname[i].childNodes[i].nodeValue);
+          document.getElementById("video"+stri+"_name").innerHTML=videoname[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri+"_time").innerHTML=videotime[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri+"_views").innerHTML=videoviews[i].childNodes[0].nodeValue+" viewers";
+          document.getElementById("video"+stri+"_likes").innerHTML=videolikes[i].childNodes[0].nodeValue+" likes";
+          document.getElementById("img"+stri).src=imgcover[i].childNodes[0].nodeValue;
+          var oldurl=document.getElementById("video"+stri).href;
+          var newurl=oldurl+videoid[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri).href=newurl;
+        }
+
+
+      }
+    }
+
+    xmlhttp.open("GET","./lib/jsp/search.jsp?query="+VideoQuery+"&sort=like",true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send();
+
+  }
+
+  function SortByViewers(){
+    var xmlhttp;
+    var xmlDoc;
+    //alert("sdf");
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+    }
+    else {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange=function() {
+    //  alert(xmlhttp.readyState+xmlhttp.status);
+      if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+
+      /*  $(document).ready(function(){
+          $("#timesort").click(function(){
+            $("#result").empty();
+          });
+        });*/
+        xmlDoc = xmlhttp.responseXML;
+        //alert(xmlDoc);
+        var videoid = xmlDoc.getElementsByTagName("vid");
+        //var gender = xmlDoc.getElementsByTagName("gender");
+        //alert(videoid.length);
+        var videoname = xmlDoc.getElementsByTagName("videoname");
+        var videotime = xmlDoc.getElementsByTagName("Time");
+        var videoviews = xmlDoc.getElementsByTagName("Views");
+        var videolikes = xmlDoc.getElementsByTagName("Likes");
+        var imgcover = xmlDoc.getElementsByTagName("Cover");
+        var sorttype = xmlDoc.getElementsByTagName("sort");
+
+        var res=document.getElementById("result");
+        videocount=videoid.length;
+        res.innerHTML="";
+
+        for(var j=0;j<videoid.length;j++){
+          var strj=String(j);
+          var div=document.createElement("div");
+          div.setAttribute("class","col-sm-6 col-md-3");
+          res.appendChild(div);
+          var a=document.createElement("a");
+          a.setAttribute("href","play.html?vid=");
+          a.setAttribute("class","thumbnail");
+          a.setAttribute("id","video"+strj);
+          div.appendChild(a);
+          var img=document.createElement("img");
+          //img.setAttribute("src","pICTURE");
+          img.setAttribute("alt","Picture Missing");
+          img.setAttribute("id","img"+strj);
+          a.appendChild(img);
+          var span1 =document.createElement("span");
+          span1.setAttribute("id","video"+strj+"_name");
+          var div1 =document.createElement("div");
+          div1.appendChild(span1);
+          a.appendChild(div1);
+          var span2 =document.createElement("span");
+          span2.setAttribute("id","video"+strj+"_time");
+          var div2 =document.createElement("div");
+          div2.appendChild(span2);
+          a.appendChild(div2);
+          var span3 =document.createElement("span");
+          span3.setAttribute("id","video"+strj+"_views");
+          var div3 =document.createElement("div");
+          div3.appendChild(span3);
+          a.appendChild(div3);
+          var span4 =document.createElement("span");
+          span4.setAttribute("id","video"+strj+"_likes");
+          var div4 =document.createElement("div");
+          div4.appendChild(span4);
+          a.appendChild(div4);
+        }
+
+
+        for(var i=0;i<videoid.length;i++){
+          var stri=String(i);
+          //alert(i);
+          //alert(videoname[i].childNodes[i].nodeValue);
+          document.getElementById("video"+stri+"_name").innerHTML=videoname[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri+"_time").innerHTML=videotime[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri+"_views").innerHTML=videoviews[i].childNodes[0].nodeValue+" viewers";
+          document.getElementById("video"+stri+"_likes").innerHTML=videolikes[i].childNodes[0].nodeValue+" likes";
+          document.getElementById("img"+stri).src=imgcover[i].childNodes[0].nodeValue;
+          var oldurl=document.getElementById("video"+stri).href;
+          var newurl=oldurl+videoid[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri).href=newurl;
+        }
+
+
+      }
+    }
+
+    xmlhttp.open("GET","./lib/jsp/search.jsp?query="+VideoQuery+"&sort=view",true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send();
+
+  }
+
+  function searchVideo() {
+  	var xmlhttp;
+  	var xmlDoc;
+  	//alert("sdf");
+  	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+  		xmlhttp=new XMLHttpRequest();
+  	}
+  	else {// code for IE6, IE5
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+
+  	xmlhttp.onreadystatechange=function() {
+    //  alert(xmlhttp.readyState+xmlhttp.status);
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+
+  			xmlDoc = xmlhttp.responseXML;
+        //alert(xmlDoc);
+  			var videoid = xmlDoc.getElementsByTagName("vid");
+  			//var gender = xmlDoc.getElementsByTagName("gender");
+        //alert(11);
+  			var videoname = xmlDoc.getElementsByTagName("videoname");
+        var videotime = xmlDoc.getElementsByTagName("Time");
+        var videoviews = xmlDoc.getElementsByTagName("Views");
+        var videolikes = xmlDoc.getElementsByTagName("Likes");
+        var imgcover = xmlDoc.getElementsByTagName("Cover");
+        var res=document.getElementById("result");
+        videocount=videoid.length;
+
+        for(var j=0;j<videoid.length;j++){
+          var strj=String(j);
+          var div=document.createElement("div");
+          div.setAttribute("ng-app","");
+          div.setAttribute("class","col-sm-6 col-md-3 ng-scope");
+
+          res.appendChild(div);
+          var a=document.createElement("a");
+          //a.setAttribute("ng-show","true");
+          a.setAttribute("href","play.html?vid=");
+          a.setAttribute("class","thumbnail ng-show");
+          a.setAttribute("id","video"+strj);
+
+          div.appendChild(a);
+          var img=document.createElement("img");
+          //img.setAttribute("src","pICTURE");
+          img.setAttribute("alt","Picture Missing");
+          img.setAttribute("id","img"+strj);
+          img.setAttribute("data-src","holder.js/100%x50%");
+          a.appendChild(img);
+          var span1 =document.createElement("span");
+          span1.setAttribute("id","video"+strj+"_name");
+          var div1 =document.createElement("div");
+          div1.appendChild(span1);
+          a.appendChild(div1);
+          var span2 =document.createElement("span");
+          span2.setAttribute("id","video"+strj+"_time");
+          var div2 =document.createElement("div");
+          div2.appendChild(span2);
+          a.appendChild(div2);
+          var span3 =document.createElement("span");
+          span3.setAttribute("id","video"+strj+"_views");
+          var div3 =document.createElement("div");
+          div3.appendChild(span3);
+          a.appendChild(div3);
+          var span4 =document.createElement("span");
+          span4.setAttribute("id","video"+strj+"_likes");
+          var div4 =document.createElement("div");
+          div4.appendChild(span4);
+          a.appendChild(div4);
+        }
+
+
+        for(var i=0;i<videoid.length;i++){
+          var stri=String(i);
+    			document.getElementById("video"+stri+"_name").innerHTML=videoname[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri+"_time").innerHTML=videotime[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri+"_views").innerHTML=videoviews[i].childNodes[0].nodeValue+" viewers";
+          document.getElementById("video"+stri+"_likes").innerHTML=videolikes[i].childNodes[0].nodeValue+" likes";
+          document.getElementById("img"+stri).src=imgcover[i].childNodes[0].nodeValue;
+          var oldurl=document.getElementById("video"+stri).href;
+          var newurl=oldurl+videoid[i].childNodes[0].nodeValue;
+          document.getElementById("video"+stri).href=newurl;
+        }
+
+
+  		}
+  	}
+
+  	xmlhttp.open("GET","./lib/jsp/search.jsp?query="+VideoQuery+"&sort=usual",true);
+  	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  	xmlhttp.send();
+  }
+
+
+  $(document).ready(function(){
+    window.onload=getSession();
+    window.onload=searchVideo();
+    window.onload=checkSession();
+  });
+
+</script>
+
+<div class="row clearfix">
+	<div class="col-md-12 column">
+		<nav class="navbar navbar-default" role="navigation">
+
+			<div class="navbar-header">
+				 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">MiniYouTube</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li>
+						 <a href="index.html"><span class="icon-home">&nbsp</span>Home</a>
+					</li>
+					<li>
+						 <a href="#">History</a>
+					</li>
+				</ul>
+				<form class="navbar-form navbar-left" role="search" >
+					<div class="form-group">
+						<input type="text" class="form-control" id="Query"/>
+					</div> <button type="button" class="btn btn-default" onclick="getQuery()"><span class="icon-search">&nbsp</span>Search</button>
+          <!--button type="button" not"submit" otherwise something wrong-->
+
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li id="ticket1">
+						<a href="signin.html">Sign in</a>
+					</li>
+					<li id="ticket2">
+						<a href="signup.html">Sign up</a>
+					</li>
+				</ul>
+			</div>
+
+		</nav>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+      <div class="row" >
+        <h3 class="text-info">Results
+          <div class="btn-group">
+    	       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Sort
+    		        <span class="caret"></span>
+    	          </button>
+          	<ul class="dropdown-menu" role="menu">
+          		<li><a onclick="SortByTime()" id="timesort">Time</a></li>
+          		<li><a onclick="SortByLikes()" id="likessort">Popularity</a></li>
+          		<li><a onclick="SortByViewers()" id="viewssort">Views</a></li>
+
+          		<!--li class="divider"></li>
+          		<li><a href="#">分离的链接</a></li-->
+          	</ul>
+          </div>
+        </h3>
+        <h3 class="text-info">
+          Filters
+          <div class="btn-group">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+          Time <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a onclick="Last1Hour()">Last 1 hour</a></li>
+          <script type="text/javascript" >
+
+          </script>
+          <li><a onclick="LastDay()">LastDay</a></li>
+          <li><a onclick="LastWeek()">LastWeek</a></li>
+          <li><a onclick="LastMonth()">LastMonth</a></li>
+        </ul>
+      </div>
+
+      <div class="btn-group">
+      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+      Viewers<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a onclick="GreaterThan100()">Greater than 100</a></li>
+        <li><a onclick="LessThan100()">50~100</a></li>
+        <li><a onclick="LessThan50()">20~50</a></li>
+        <li><a onclick="LessThan20()">Less than 20</a></li>
+      </ul>
+      </div>
+      <div class="btn-group">
+      <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+      Likes<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a onclick="LikesGreaterThan100()">Greater than 100</a></li>
+        <li><a onclick="LikesLessThan100()">50~100</a></li>
+        <li><a onclick="LikesLessThan50()">20~50</a></li>
+        <li><a onclick="LikesLessThan20()">Less than 20</a></li>
+      </ul>
+      </div>
+      </h3>
+      <div class="row" id="result">
+
+      </div>
+      </div>
+
+		</div>
+	</div>
+</div>
+</body>
+
+<footer>
+<div class="container" style="color:gray">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+					 <p>Some introduction of our project</p>
+				</div>
+				<div class="col-md-4 column">
+					<ul class="list-unstyled">
+						<strong>Technique we used</strong>
+						<li>
+							JavaScript
+						</li>
+						<li>
+							HTML
+						</li>
+						<li>
+							HTML5
+						</li>
+						<li>
+							JQuery
+						</li>
+						<li>
+							...
+						</li>
+
+					</ul>
+				</div>
+				<div class="col-md-4 column">
+					<ul class="list-unstyled">
+						<strong>Our group member</strong>
+						<li>
+							William Lee
+						</li>
+						<li>
+							Tong Shen
+						</li>
+						<li>
+							Michael Tran
+						</li>
+						<li>
+							Ziyu Wang
+						</li>
+						<li>
+							Ziang Zhao
+						</li>
+						<li>
+							Yongqing Zhu
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</footer>
+</html>

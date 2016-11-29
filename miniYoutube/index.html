@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8"> 
+  <meta charset="utf-8">
   <title>VideoStream</title>
 
-  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css"> 
-  <link rel="stylesheet" href="./lib/bootstrap/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./lib/bootstrap/css/font-awesome.min.css">
   <link rel="stylesheet" href="./CSS/accessibility_foundicons.css">
   <link rel="stylesheet" href="./CSS/stylesheets/general_foundicons.css">
   <script src="./lib/jquery.js"></script>
@@ -19,9 +19,9 @@
 <script type="text/javascript" src="./lib/js/index.js"></script>
 
 <style type="text/css">
-	
+
 .navbar{
-	
+
 	box-shadow: -2px -2px 8px gray;
 	filter:alpha(opacity=95);
 	opacity:0.95;
@@ -57,7 +57,7 @@ footer .container{
 <div class="row clearfix">
 	<div class="col-md-12 column">
 		<nav class="navbar navbar-default" role="navigation">
-		
+
 			<div class="navbar-header">
 				 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">MiniYouTube</a>
 			</div>
@@ -70,10 +70,12 @@ footer .container{
 						 <a href="#">History</a>
 					</li>
 				</ul>
-				<form class="navbar-form navbar-left" role="search">
+				<form class="navbar-form navbar-left" role="search" >
 					<div class="form-group">
-						<input type="text" class="form-control" />
-					</div> <button type="submit" class="btn btn-default"><span class="icon-search">&nbsp</span>Search</button>
+						<input type="text" class="form-control" id="Query"/>
+					</div> <button type="button" class="btn btn-default" onclick="getQuery()"><span class="icon-search">&nbsp</span>Search</button>
+          <!--button type="button" not"submit" otherwise something wrong-->
+
 				</form>
 				<ul class="nav navbar-nav navbar-right">
 					<li id="ticket1">
@@ -84,7 +86,7 @@ footer .container{
 					</li>
 				</ul>
 			</div>
-			
+
 		</nav>
 	</div>
 </div>
@@ -102,19 +104,19 @@ footer .container{
 		<div class="item">
 			<img alt="" src="./images/default.jpg" />
 			<div class="carousel-caption">
-				
+
 			</div>
 		</div>
 		<div class="item">
 			<img alt="" src="./images/default.jpg" />
 			<div class="carousel-caption">
-				
+
 			</div>
 		</div>
 		<div class="item active">
 			<img alt="" src="./images/default.jpg" />
 			<div class="carousel-caption">
-				
+
 			</div>
 		</div>
 	</div> <a class="left carousel-control" href="#carousel-126282" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-126282" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -126,7 +128,7 @@ footer .container{
 		    <div class="col-sm-6 col-md-3">
 		        <a href="play.html?vid=1" class="thumbnail">
 		            <img src="./images/covers/43.png"
-		                 alt="通用的占位符缩略图">
+		                 alt="通用的占位符缩略图" height="20">
 		            <p>TOFEL READING</p>
 		        </a>
 		    </div>
@@ -179,7 +181,7 @@ footer .container{
 		        </a>
 		    </div>
 		</div>
-				
+
 	</div>
 </div>
 </div>
@@ -212,7 +214,7 @@ footer .container{
 						<li>
 							...
 						</li>
-						
+
 					</ul>
 				</div>
 				<div class="col-md-4 column">

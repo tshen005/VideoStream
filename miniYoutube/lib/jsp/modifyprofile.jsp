@@ -15,7 +15,7 @@
 	String passwd = "MNX9HJjW";
 
 	String user1 = (String)session.getAttribute("username");
-	if(user1 == null) {
+	if(session.getAttribute("username")==null || session.getAttribute("username")=="") {
 		out.println("0");
 		return;
 	}
